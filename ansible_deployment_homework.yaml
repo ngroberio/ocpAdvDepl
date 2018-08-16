@@ -1,0 +1,115 @@
+---
+- name: Prepare GUID environment variable across all hosts
+  hosts: all
+  tasks:
+    - name: All GUID env variable
+      shell: export GUID=`hostname | cut -d"." -f2`; echo "export GUID=$GUID" >> $HOME/.bashrc
+
+- name: Verify Installation and Configuration of Docker
+  hosts: nodes
+  tasks:
+    - name: docker restart
+      shell: systemctl status docker | grep Active
+
+- name: Verify NFS Shared Volumes on Hosts
+  hosts: nfs
+  tasks:
+    - name: Examine the NFS server to see which NFS volumes are shared
+      shell: exportfs
+
+- name: Install packages and config auth
+  hosts: localhost
+  tasks:
+    - name: required packages are present
+      yum:
+        name:
+          - atomic-openshift-utils
+          - atomic-openshift-clients
+        state: present
+
+- name: Generate Inventory Hosts File
+  hosts: localhost
+  tasks:
+    - name: Generate Inventory script
+      script: ./scripts/generate_inventory.sh
+
+- name: Execute the openshift-ansible prerequisites
+  import_playbook: /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
+
+- name: Execute the openshift-ansible Deployer
+  import_playbook: /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
+
+- name: Verify OpenShift Cluster
+  hosts: masters[0]
+  tasks:
+    - name: copy the .kube directory from master1 to your bastion
+      fetch:
+        src: /root/.kube/config
+        dest: /root/.kube/config
+        flat: yes
+
+- name: Post installation configuration
+  hosts: localhost
+  tasks:
+    - name: make sure you are system:dmin
+      shell: oc whoami | grep system:admin
+    - name: grant user1 to administrator privilege
+      shell: oc adm policy add-cluster-role-to-user cluster-admin user1
+
+- name: Create PVs for Users
+  hosts: nfs
+  tasks:
+    - name: Create PVs
+      script: ./scripts/create_pvs.sh
+    - name: Restarting NFS Server...
+      shell: systemctl restart nfs-server
+
+- name: Create 25 definitions files for PVs 5G size
+  hosts: localhost
+  tasks:
+    - name: Create 25 definitions files 5G size
+      script: ./scripts/pvs_5Gsize.sh
+
+- name: Create 25 definitions files for PVs 10G size
+  hosts: localhost
+  tasks:
+    - name: Create 25 definitions files 10G size
+      script: ./scripts/pvs_10Gsize.sh
+
+- name: Create all PVs from definitions files
+  hosts: localhost
+  tasks:
+    - name: Create 25 definitions files 5G size
+      shell: cat /root/pvs/* | oc create -f -
+
+- name: Fix NFS Persistent Volume Recycling
+  hosts: nodes
+  tasks:
+    - name: Pulling ose recycler image
+      shell: docker pull registry.access.redhat.com/openshift3/ose-recycler:latest
+    - name: Tagging ose recycler image
+      shell: docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.9.30
+
+- name: Smoke Test
+  hosts: localhost
+  tasks:
+    - name: Smoke Test
+      script: ./scripts/nodejs_mongo_app.sh
+
+- name: CI CD workflow
+  hosts: localhost
+  tasks:
+    - name: CI CD workflow
+      script: ./scripts/cicd.sh
+
+- name: HPA configuration on production deployment of openshift-tasks
+  hosts: localhost
+  tasks:
+    - name: HPA configuration
+      shell: oc autoscale dc/openshift-tasks --min=1 --max=5 --cpu-percent=70 -n basic-spring-boot-prod
+
+- name: Multitenancy
+  hosts: localhost
+  tasks:
+    - name: Multitenancy
+      script: ./scripts/multitenancy.sh
