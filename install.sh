@@ -11,7 +11,6 @@ p) CURRENT_PATH=${OPTARG};;
 esac
 done
 
-
 if [ -z $GUID ]; then GUID=`hostname|awk -F. '{print $2}'`; fi
 if [ -z $INTERNAL ]; then INTERNAL=internal; fi
 if [ -z $EXTERNAL ]; then EXTERNAL=example.opentlc.com; fi
@@ -23,30 +22,37 @@ echo -- External domain = $EXTERNAL --
 echo -- Current path = $CURRENT_PATH --
 
 
-echo  "-- Preparing hosts file --"
+echo  ">>> PREPARING HOSTS FILES"
 cat ./config/templates/hosts.template | sed -e "s:{GUID}:$GUID:g;s:{DOMAIN_INTERNAL}:$INTERNAL:g;s:{DOMAIN_EXTERNAL}:$EXTERNAL:g;s:{PATH}:$CURRENT_PATH:g;" > hosts
+echo  "<<< PREPARING HOSTS FILES DONE"
 
-echo -- Installing atomic packages --
+echo ">>> INSTALL ATOMIC PACKAGES"
 yum -y install atomic-openshift-utils atomic-openshift-clients
+echo "<<< INSTALL ATOMIC PACKAGES DONE"
 
-echo -- Installing screen --
+echo ">>> INSTALL SCREEN"
 yum -y install screen
+echo "<<< INSTALL SCREEN DONE"
 
-
-echo -- Checking Openshift Prerequisites --
+echo ">>> CHECK OPENSHIFT PREREQUISITES"
 if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml ; then
-    echo -- Prerequisites successful. Installing Openshift --
+    echo "<<< CHECK OPENSHIFT PREREQUISITES SUCCESSFUL"
+    
+    echo ">>> INSTALL OPENSHIFT"
     screen -S os-install -m bash -c "sudo ansible-playbook -f 20 -i $CURRENT_PATH/hosts /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml"
+    echo ">>> INSTALL OPENSHIFT DONE"
     
-    echo -- Copying kube config --
+    echo ">>> COPY KUBE CONFIG"
     ansible masters[0] -b -m fetch -a "src=/root/.kube/config dest=/root/.kube/config flat=yes"
-    
-    echo -- Creating user groups --
+    echo "<<< COPY KUBE CONFIG DONE"
+
+    echo ">>> CREATE USER GROUPS"
     oc adm groups new alpha Amy Andrew
     oc adm groups new beta Brian Betty
     oc adm groups new common
+    echo "<<< CREATE USER GROUPS DONE"
 
-    echo -- Creating nfs storage --
+    echo ">>> CREATE NFS STORAGE"
     ssh support1.2954.internal "bash -s" -- < ./config/infra/create_pvs.sh
     rm -rf pvs; mkdir pvs
     
@@ -59,47 +65,51 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     ansible nodes -i ./hosts -m shell -a "docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.9.30"
 
     cat ./pvs/* | oc create -f -
+    echo "<<< CREATE NFS STORAGE DONE"
 
-    echo -- Setting up CICD pipeline --
+    echo ">>> SETUP AMY CICD SIMPLE PIPELINE" 
     oc login -u Amy -pr3dh4t1!
     oc new-project os-tasks-${GUID}-dev
     oc new-project os-tasks-${GUID}-test
     oc new-project os-tasks-${GUID}-prod
+    echo "<<< SETUP AMY CICD SIMPLE PIPELINE DONE" 
 
-    echo -- Setting up Jenkins --
+    echo ">>> SETUP JENKINS"
     oc new-app jenkins-persistent -p ENABLE_OAUTH=true -e JENKINS_PASSWORD=jenkins -n os-tasks-${GUID}-dev
+    echo ">>>>> ADD JENKINS USER PERMISSIONS TO SERVICEACCOUNT"
     oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:jenkins -n os-tasks-${GUID}-test
     oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:jenkins -n os-tasks-${GUID}-prod
-
     oc policy add-role-to-group system:image-puller system:serviceaccounts:os-tasks-${GUID}-test -n os-tasks-${GUID}-dev
     oc policy add-role-to-group system:image-puller system:serviceaccounts:os-tasks-${GUID}-prod -n os-tasks-${GUID}-dev
-    
-    echo -- Setting up openshift-tasks app --
+    echo "<<< SETUP JENKINS DONE"
+
+    echo ">>> SETUP OPENSHIFT TO RUN PIPELINE" 
     oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param SOURCE_REPOSITORY_URL=https://github.com/OpenShiftDemos/openshift-tasks.git --param SOURCE_REPOSITORY_REF=master --param CONTEXT_DIR=/ -n os-tasks-${GUID}-dev
     oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param SOURCE_REPOSITORY_URL=https://github.com/OpenShiftDemos/openshift-tasks.git --param SOURCE_REPOSITORY_REF=master --param CONTEXT_DIR=/ -n os-tasks-${GUID}-test
     oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param SOURCE_REPOSITORY_URL=https://github.com/OpenShiftDemos/openshift-tasks.git --param SOURCE_REPOSITORY_REF=master --param CONTEXT_DIR=/ -n os-tasks-${GUID}-prod
 
     cat ./config/templates/os-pipeline.yaml.template | sed -e "s:{GUID}:$GUID:g" > ./os-pipeline.yaml
     oc create -f ./os-pipeline.yaml -n os-tasks-${GUID}-dev
+    echo "<<< SETUP OPENSHIFT TO RUN PIPELINE DONE"
     
-    echo -- Verify Jenkins is up --
+    echo ">>> JENKINS LIVENESS CHECK" 
     ./config/bin/podLivenessCheck.sh jenkins os-tasks-${GUID}-dev 15
 
-    echo -- Running pipeline --
+    echo ">>> RUN PIPELINE" 
     oc start-build os-pipeline -n os-tasks-${GUID}-dev
+    echo "<<< RUN PIPELINE DONE" 
 
-    echo -- Set up autoscaler --
+    echo ">>> SETUP AUTOSCALER"
     oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=80 -n os-tasks-${GUID}-prod
+    echo "<<< SETUP AUTOSCALER DONE"
 
-
-    echo -- Set up dedicated nodes --
+    echo ">>> SET UP DEDICATED NODES"
     oc login -u system:admin
     oc label node node1.${GUID}.internal client=alpha
     oc label node node2.${GUID}.internal client=beta
     oc label node node3.${GUID}.internal client=common
-#    TODO: Finish setting up dedicated nodes
-
+    echo "<<< SET UP DEDICATED NODES DONE"
  
 else
-    echo -- Prerequisites failed --
+    echo ">>> PREREQUITES RUN FAILED"
 fi
