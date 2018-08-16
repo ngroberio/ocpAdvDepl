@@ -18,7 +18,7 @@ if [ -z $CURRENT_PATH ]; then CURRENT_PATH=`pwd`; fi
 
 echo -- GUID = $GUID --
 echo -- Internal domain = $INTERNAL --
-echo -- External domain = $EXTERNAL -- 
+echo -- External domain = $EXTERNAL --
 echo -- Current path = $CURRENT_PATH --
 
 
@@ -37,11 +37,11 @@ echo "<<< INSTALL SCREEN DONE"
 echo ">>> CHECK OPENSHIFT PREREQUISITES"
 if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml ; then
     echo "<<< CHECK OPENSHIFT PREREQUISITES SUCCESSFUL"
-    
+
     echo ">>> INSTALL OPENSHIFT"
     screen -S os-install -m bash -c "sudo ansible-playbook -f 20 -i $CURRENT_PATH/hosts /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml"
     echo ">>> INSTALL OPENSHIFT DONE"
-    
+
     echo ">>> COPY KUBE CONFIG"
     ansible masters[0] -b -m fetch -a "src=/root/.kube/config dest=/root/.kube/config flat=yes"
     echo "<<< COPY KUBE CONFIG DONE"
@@ -55,24 +55,24 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     echo ">>> CREATE NFS STORAGE"
     ssh support1.2954.internal "bash -s" -- < ./config/infra/create_pvs.sh
     rm -rf pvs; mkdir pvs
-    
-    for i in {1..50} 
+
+    for i in {1..50}
     do
-      cat ./config/templates/pvs/pv${i}.template | sed -e "s:{GUID}:$GUID:g" > ./pvs/pv${i}; 
+      cat ./config/templates/pvs/pv${i}.template | sed -e "s:{GUID}:$GUID:g" > ./pvs/pv${i};
     done
-    
+
     ansible nodes -i ./hosts -m shell -a "docker pull registry.access.redhat.com/openshift3/ose-recycler:latest"
     ansible nodes -i ./hosts -m shell -a "docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.9.30"
 
     cat ./pvs/* | oc create -f -
     echo "<<< CREATE NFS STORAGE DONE"
 
-    echo ">>> SETUP AMY CICD SIMPLE PIPELINE" 
+    echo ">>> SETUP AMY CICD SIMPLE PIPELINE"
     oc login -u Amy -pr3dh4t1!
     oc new-project os-tasks-${GUID}-dev
     oc new-project os-tasks-${GUID}-test
     oc new-project os-tasks-${GUID}-prod
-    echo "<<< SETUP AMY CICD SIMPLE PIPELINE DONE" 
+    echo "<<< SETUP AMY CICD SIMPLE PIPELINE DONE"
 
     echo ">>> SETUP JENKINS"
     oc new-app jenkins-persistent -p ENABLE_OAUTH=true -e JENKINS_PASSWORD=jenkins -n os-tasks-${GUID}-dev
@@ -83,7 +83,7 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     oc policy add-role-to-group system:image-puller system:serviceaccounts:os-tasks-${GUID}-prod -n os-tasks-${GUID}-dev
     echo "<<< SETUP JENKINS DONE"
 
-    echo ">>> SETUP OPENSHIFT TO RUN PIPELINE" 
+    echo ">>> SETUP OPENSHIFT TO RUN PIPELINE"
     oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param SOURCE_REPOSITORY_URL=https://github.com/OpenShiftDemos/openshift-tasks.git --param SOURCE_REPOSITORY_REF=master --param CONTEXT_DIR=/ -n os-tasks-${GUID}-dev
     oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param SOURCE_REPOSITORY_URL=https://github.com/OpenShiftDemos/openshift-tasks.git --param SOURCE_REPOSITORY_REF=master --param CONTEXT_DIR=/ -n os-tasks-${GUID}-test
     oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param SOURCE_REPOSITORY_URL=https://github.com/OpenShiftDemos/openshift-tasks.git --param SOURCE_REPOSITORY_REF=master --param CONTEXT_DIR=/ -n os-tasks-${GUID}-prod
@@ -91,13 +91,13 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     cat ./config/templates/os-pipeline.yaml.template | sed -e "s:{GUID}:$GUID:g" > ./os-pipeline.yaml
     oc create -f ./os-pipeline.yaml -n os-tasks-${GUID}-dev
     echo "<<< SETUP OPENSHIFT TO RUN PIPELINE DONE"
-    
-    echo ">>> JENKINS LIVENESS CHECK" 
+
+    echo ">>> JENKINS LIVENESS CHECK"
     ./config/bin/podLivenessCheck.sh jenkins os-tasks-${GUID}-dev 15
 
-    echo ">>> RUN PIPELINE" 
+    echo ">>> RUN PIPELINE"
     oc start-build os-pipeline -n os-tasks-${GUID}-dev
-    echo "<<< RUN PIPELINE DONE" 
+    echo "<<< RUN PIPELINE DONE"
 
     echo ">>> SETUP AUTOSCALER"
     oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=80 -n os-tasks-${GUID}-prod
@@ -109,7 +109,11 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     oc label node node2.${GUID}.internal client=beta
     oc label node node3.${GUID}.internal client=common
     echo "<<< SET UP DEDICATED NODES DONE"
- 
+
+    echo ">>> SET UP MULTITENANCY"
+    ./config/infra/setup_multitenacy.sh
+    echo ">>> SET UP MULTITENANCY DONE"
+    
 else
     echo ">>> PREREQUITES RUN FAILED"
 fi

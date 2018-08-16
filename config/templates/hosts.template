@@ -12,6 +12,8 @@ ansible_ssh_user=ec2-user
 ###########################################################################
 deployment_type=openshift-enterprise
 containerized=false
+
+# disable memory disk check, as we are not a production environment
 openshift_disable_check="disk_availability,memory_availability,docker_image_availability"
 
 # default project node selector
@@ -37,8 +39,8 @@ openshift_enable_unsupported_configurations=True
 ###########################################################################
 ### OpenShift Network Vars
 ###########################################################################
-
-os_sdn_network_plugin_name='redhat/openshift-ovs-subnet'
+os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
+#os_sdn_network_plugin_name='redhat/openshift-ovs-subnet'
 
 ###########################################################################
 ### OpenShift Authentication Vars
@@ -50,7 +52,6 @@ openshift_master_htpasswd_file={PATH}/config/infra/htpasswd.openshift
 
 # LDAP Authentication (download ipa-ca.crt first)
 #openshift_master_identity_providers=[{'name': 'ldap', 'challenge': 'true', 'login': 'true', 'kind': 'LDAPPasswordIdentityProvider','attributes': {'id': ['dn'], 'email': ['mail'], 'name': ['cn'], 'preferredUsername': ['uid']}, 'bindDN': 'uid=admin,cn=users,cn=accounts,dc=shared,dc=example,dc=opentlc,dc=com', 'bindPassword': 'r3dh4t1!', 'ca': '/etc/origin/master/ipa-ca.crt','insecure': 'false', 'url': 'ldaps://ipa.shared.{DOMAIN_EXTERNAL}:636/cn=users,cn=accounts,dc=shared,dc=example,dc=opentlc,dc=com?uid?sub?(memberOf=cn=ocp-users,cn=groups,cn=accounts,dc=shared,dc=example,dc=opentlc,dc=com)'}]
-
 #openshift_master_ldap_ca_file={PATH}/ipa-ca.crt
 
 ###########################################################################
@@ -64,9 +65,7 @@ oreg_url=registry.access.redhat.com/openshift3/ose-${component}:${version}
 openshift_examples_modify_imagestreams=true
 
 openshift_hosted_router_replicas=2
-
 openshift_hosted_registry_replicas=1
-
 openshift_hosted_registry_storage_kind=nfs
 openshift_hosted_registry_storage_access_modes=['ReadWriteMany']
 openshift_hosted_registry_storage_nfs_directory=/srv/nfs
@@ -101,7 +100,7 @@ openshift_hosted_etcd_storage_volume_size=10G
 ### OpenShift Metrics and Logging Vars
 ###########################################################################
 
-# Enable cluster metrics
+#### Enable cluster metrics
 openshift_metrics_install_metrics=True
 
 openshift_metrics_storage_kind=nfs
@@ -116,7 +115,7 @@ openshift_metrics_cassandra_nodeselector={"env":"infra"}
 openshift_metrics_hawkular_nodeselector={"env":"infra"}
 openshift_metrics_heapster_nodeselector={"env":"infra"}
 
-# Enable cluster logging
+#### Enable cluster logging
 openshift_logging_install_logging=true
 
 openshift_logging_storage_kind=nfs
@@ -127,9 +126,8 @@ openshift_logging_storage_volume_name=logging
 openshift_logging_storage_volume_size=10Gi
 openshift_logging_storage_labels={'storage': 'logging'}
 
-# openshift_logging_kibana_hostname=kibana.apps.{GUID}.{DOMAIN_EXTERNAL}
+#### openshift_logging_kibana_hostname=kibana.apps.{GUID}.{DOMAIN_EXTERNAL}
 openshift_logging_es_cluster_size=1
-
 openshift_logging_es_nodeselector={"env":"infra"}
 openshift_logging_kibana_nodeselector={"env":"infra"}
 openshift_logging_curator_nodeselector={"env":"infra"}
@@ -138,12 +136,12 @@ openshift_logging_curator_nodeselector={"env":"infra"}
 ### OpenShift Prometheus Vars
 ###########################################################################
 
-## Add Prometheus Metrics:
+#### Add Prometheus Metrics:
 openshift_hosted_prometheus_deploy=true
 openshift_prometheus_node_selector={"env":"infra"}
 openshift_prometheus_namespace=openshift-metrics
 
-# Prometheus
+#### Prometheus
 openshift_prometheus_storage_kind=nfs
 openshift_prometheus_storage_access_modes=['ReadWriteOnce']
 openshift_prometheus_storage_nfs_directory=/srv/nfs
@@ -153,7 +151,7 @@ openshift_prometheus_storage_volume_size=10Gi
 openshift_prometheus_storage_labels={'storage': 'prometheus'}
 openshift_prometheus_storage_type='pvc'
 
-# For prometheus-alertmanager
+#### For prometheus-alertmanager
 openshift_prometheus_alertmanager_storage_kind=nfs
 openshift_prometheus_alertmanager_storage_access_modes=['ReadWriteOnce']
 openshift_prometheus_alertmanager_storage_nfs_directory=/srv/nfs
@@ -163,7 +161,7 @@ openshift_prometheus_alertmanager_storage_volume_size=10Gi
 openshift_prometheus_alertmanager_storage_labels={'storage': 'prometheus-alertmanager'}
 openshift_prometheus_alertmanager_storage_type='pvc'
 
-# For prometheus-alertbuffer
+#### For prometheus-alertbuffer
 openshift_prometheus_alertbuffer_storage_kind=nfs
 openshift_prometheus_alertbuffer_storage_access_modes=['ReadWriteOnce']
 openshift_prometheus_alertbuffer_storage_nfs_directory=/srv/nfs
@@ -173,7 +171,7 @@ openshift_prometheus_alertbuffer_storage_volume_size=10Gi
 openshift_prometheus_alertbuffer_storage_labels={'storage': 'prometheus-alertbuffer'}
 openshift_prometheus_alertbuffer_storage_type='pvc'
 
-# Necessary because of a bug in the installer on 3.9
+#### Necessary because of a bug in the installer on 3.9
 openshift_prometheus_node_exporter_image_version=v3.9
 
 ###########################################################################
