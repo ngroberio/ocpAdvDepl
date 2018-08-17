@@ -91,7 +91,7 @@ Engagement journal
   ->These are related templates below:
     ./config/templates/os_pipeline_template.yaml
   -> These are install scripts lines related below:
-    - start at 93 to 133
+      ./config/infra/setup_cicd.sh
 
 ++ Multitenancy
   Alpha Corp group have two users, Amy and Andrew
