@@ -2,15 +2,15 @@
 
 export GUID=`hostname | cut -d"." -f2`
 
-ansible masters -m shell -a 'htpasswd -b /etc/origin/master/htpasswd amy amy'
-ansible masters -m shell -a 'htpasswd -b /etc/origin/master/htpasswd andrew andrew'
-ansible masters -m shell -a 'htpasswd -b /etc/origin/master/htpasswd brian brian'
-ansible masters -m shell -a 'htpasswd -b /etc/origin/master/htpasswd betty betty'
+ansible masters -m shell -a 'htpasswd -b /etc/origin/master/htpasswd Amy amy'
+ansible masters -m shell -a 'htpasswd -b /etc/origin/master/htpasswd Andrew andrew'
+ansible masters -m shell -a 'htpasswd -b /etc/origin/master/htpasswd Brian brian'
+ansible masters -m shell -a 'htpasswd -b /etc/origin/master/htpasswd Betty betty'
 
-oc adm groups new alpha amy andrew
-oc adm groups new beta brian betty
+oc adm groups new alpha Amy Andrew
+oc adm groups new beta Brian Betty
 
-for OCP_USERNAME in amy andrew brian betty; do
+for OCP_USERNAME in Amy Andrew Brian Betty; do
 
 oc create clusterquota clusterquota-$OCP_USERNAME \
  --project-annotation-selector=openshift.io/requester=$OCP_USERNAME \
