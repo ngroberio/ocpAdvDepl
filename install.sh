@@ -75,6 +75,17 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
 
     echo "<<< FIX NFS PV RECYCLING DONE"
 
+    echo ">>> SET UP DEDICATED NODES"
+    oc login -u system:admin
+    oc label node node1.${GUID}.internal client=alpha
+    oc label node node2.${GUID}.internal client=beta
+    oc label node node3.${GUID}.internal client=common
+    echo "<<< SET UP DEDICATED NODES DONE"
+
+    echo ">>> SET UP MULTITENANCY"
+    ./config/infra/setup_multitenacy.sh
+    echo ">>> SET UP MULTITENANCY DONE"
+
     echo ">>> SETUP AMY CICD SIMPLE PIPELINE"
     oc login -u Amy -pr3dh4t1!
     oc new-project os-tasks-${GUID}-dev
@@ -99,6 +110,13 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param SOURCE_REPOSITORY_URL=https://github.com/OpenShiftDemos/openshift-tasks.git --param SOURCE_REPOSITORY_REF=master --param CONTEXT_DIR=/ -n os-tasks-${GUID}-stage
     oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param SOURCE_REPOSITORY_URL=https://github.com/OpenShiftDemos/openshift-tasks.git --param SOURCE_REPOSITORY_REF=master --param CONTEXT_DIR=/ -n os-tasks-${GUID}-prod
 
+    echo ">>> SETUP AUTOSCALER"
+    oc autoscale dc/os-tasks --min 1 --max 2 --cpu-percent=80 -n os-tasks-${GUID}-dev
+    oc autoscale dc/os-tasks --min 1 --max 2 --cpu-percent=80 -n os-tasks-${GUID}-test
+    oc autoscale dc/os-tasks --min 1 --max 2 --cpu-percent=80 -n os-tasks-${GUID}-stage
+    oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=80 -n os-tasks-${GUID}-prod
+    echo "<<< SETUP AUTOSCALER DONE"
+
     cat ./config/templates/os_pipeline_template.yaml | sed -e "s:{GUID}:$GUID:g" > ./os-pipeline.yaml
     oc create -f ./os-pipeline.yaml -n os-tasks-${GUID}-dev
     echo "<<< SETUP OPENSHIFT TO RUN PIPELINE DONE"
@@ -109,22 +127,6 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     echo ">>> RUN PIPELINE"
     oc start-build os-pipeline -n os-tasks-${GUID}-dev
     echo "<<< RUN PIPELINE DONE"
-
-    echo ">>> SETUP AUTOSCALER"
-    oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=80 -n os-tasks-${GUID}-prod
-    echo "<<< SETUP AUTOSCALER DONE"
-
-    echo ">>> SET UP DEDICATED NODES"
-    oc login -u system:admin
-    oc label node node1.${GUID}.internal client=alpha
-    oc label node node2.${GUID}.internal client=beta
-    oc label node node3.${GUID}.internal client=common
-    echo "<<< SET UP DEDICATED NODES DONE"
-
-    echo ">>> SET UP MULTITENANCY"
-    ./config/infra/setup_multitenacy.sh
-    echo ">>> SET UP MULTITENANCY DONE"
-
 else
     echo ">>> PREREQUITES RUN FAILED"
 fi
