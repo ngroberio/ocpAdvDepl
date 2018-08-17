@@ -1,5 +1,16 @@
 #!/bin/bash
 
+echo ">>> INITIATE ENV VARIABLES"
+export GUID=`hostname|awk -F. '{print $2}'`
+export INTERNAL=internal
+export EXTERNAL=example.opentlc.com
+export CURRENT_PATH=`pwd`
+
+echo -- GUID = $GUID --
+echo -- Internal domain = $INTERNAL --
+echo -- External domain = $EXTERNAL --
+echo -- Current path = $CURRENT_PATH --
+
 echo  ">>> PREPARING HOSTS FILES"
 ./config/bin/initiateHostsTemplate.sh
 echo  "<<< PREPARING HOSTS FILES DONE"
@@ -33,9 +44,8 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     echo "<<< CREATE USER GROUPS DONE"
 
     echo ">>> CREATE NFS STORAGE"
-    ssh support1.${GUID}.internal "bash -s" -- < ./config/infra/pvs/create_pvs.sh
-    rm -rf pvs; mkdir pvs
-
+    #ssh support1.${GUID}.internal "bash -s" -- < ./config/infra/pvs/create_pvs.sh
+    ./config/infra/pvs/create_pvs.sh
     ./config/infra/pvs/create_pvs_5gigs.sh
     ./config/infra/pvs/create_pvs_10gigs.sh
 

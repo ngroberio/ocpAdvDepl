@@ -2,11 +2,6 @@
 
 export GUID=`hostname | cut -d"." -f2`
 
-ansible masters -m shell -a 'htpasswd -b /etc/origin/master/htpasswd Amy amy'
-ansible masters -m shell -a 'htpasswd -b /etc/origin/master/htpasswd Andrew andrew'
-ansible masters -m shell -a 'htpasswd -b /etc/origin/master/htpasswd Brian brian'
-ansible masters -m shell -a 'htpasswd -b /etc/origin/master/htpasswd Betty betty'
-
 oc adm groups new alpha Amy Andrew
 oc adm groups new beta Brian Betty
 
