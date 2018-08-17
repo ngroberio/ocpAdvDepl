@@ -56,16 +56,23 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     ssh support1.2954.internal "bash -s" -- < ./config/infra/create_pvs.sh
     rm -rf pvs; mkdir pvs
 
-    for i in {1..50}
-    do
-      cat ./config/templates/pvs/pv${i}.template | sed -e "s:{GUID}:$GUID:g" > ./pvs/pv${i};
-    done
-
-    ansible nodes -i ./hosts -m shell -a "docker pull registry.access.redhat.com/openshift3/ose-recycler:latest"
-    ansible nodes -i ./hosts -m shell -a "docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.9.30"
+    ./config/infra/pvs/create_pvs_5gigs.sh
+    ./config/infra/pvs/create_pvs_10gigs.sh
 
     cat ./pvs/* | oc create -f -
+
     echo "<<< CREATE NFS STORAGE DONE"
+
+    echo ">>> FIX NFS PV RECYCLING"
+
+    echo "PULL OSE RECYCLER IMAGE"
+    ansible nodes -i ./hosts -m shell -a "docker pull registry.access.redhat.com/openshift3/ose-recycler:latest"
+
+    echo "TAG OS RECYCLER IMAGE"
+    ansible nodes -i ./hosts -m shell -a "docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.9.30"
+
+    echo "<<< FIX NFS PV RECYCLING DONE"
+
 
     echo ">>> SETUP AMY CICD SIMPLE PIPELINE"
     oc login -u Amy -pr3dh4t1!

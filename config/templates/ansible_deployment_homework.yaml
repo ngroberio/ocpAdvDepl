@@ -60,21 +60,19 @@
   hosts: nfs
   tasks:
     - name: Create PVs
-      script: ./scripts/create_pvs.sh
-    - name: Restarting NFS Server...
-      shell: systemctl restart nfs-server
+      script: ./config/infra/pvs/create_pvs.sh
 
 - name: Create 25 definitions files for PVs 5G size
   hosts: localhost
   tasks:
     - name: Create 25 definitions files 5G size
-      script: ./scripts/pvs_5Gsize.sh
+      script: ./config/infra/pvs/create_pvs_5gigs.sh
 
 - name: Create 25 definitions files for PVs 10G size
   hosts: localhost
   tasks:
     - name: Create 25 definitions files 10G size
-      script: ./scripts/pvs_10Gsize.sh
+      script: ./config/infra/pvs/create_pvs_10gigs.sh
 
 - name: Create all PVs from definitions files
   hosts: localhost
