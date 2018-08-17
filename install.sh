@@ -23,7 +23,7 @@ echo -- Current path = $CURRENT_PATH --
 
 
 echo  ">>> PREPARING HOSTS FILES"
-cat ./config/templates/hosts.template | sed -e "s:{GUID}:$GUID:g;s:{DOMAIN_INTERNAL}:$INTERNAL:g;s:{DOMAIN_EXTERNAL}:$EXTERNAL:g;s:{PATH}:$CURRENT_PATH:g;" > hosts
+cat ./config/templates/hosts_template.yaml | sed -e "s:{GUID}:$GUID:g;s:{DOMAIN_INTERNAL}:$INTERNAL:g;s:{DOMAIN_EXTERNAL}:$EXTERNAL:g;s:{PATH}:$CURRENT_PATH:g;" > hosts
 echo  "<<< PREPARING HOSTS FILES DONE"
 
 echo ">>> INSTALL ATOMIC PACKAGES"
@@ -113,7 +113,7 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     echo ">>> SET UP MULTITENANCY"
     ./config/infra/setup_multitenacy.sh
     echo ">>> SET UP MULTITENANCY DONE"
-    
+
 else
     echo ">>> PREREQUITES RUN FAILED"
 fi

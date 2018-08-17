@@ -82,7 +82,7 @@ Engagement journal
   Metrics and Logging components run on Infranodes
   Service Catalog, Template Service Broker, and Ansible Service Broker are all working very well.
   This is hosts file:
-    config/templates/hosts.template
+    config/templates/hosts_template.yaml
 
 ++ CICD Workflow
   Jenkins pod is running with a persistent volume
