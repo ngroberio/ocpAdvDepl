@@ -27,28 +27,28 @@
           - atomic-openshift-clients
         state: present
 
-- name: Generate Inventory Hosts File
+- name: INITIATE HOSTS FILE
   hosts: localhost
   tasks:
-    - name: Generate Inventory script
-      script: ./scripts/generate_inventory.sh
+    - name: INITIATE HOSTS
+      script: ./config/bin/initiateHostsTemplate.sh
 
-- name: Execute the openshift-ansible prerequisites
+- name: CHECK ANSIBLE PREREQUISITES
   import_playbook: /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
 
-- name: Execute the openshift-ansible Deployer
+- name: EXECUTE ANSIBLE DEPLOYER
   import_playbook: /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
 
-- name: Verify OpenShift Cluster
+- name: CHECK OPENSHIFT CLUSTER
   hosts: masters[0]
   tasks:
-    - name: copy the .kube directory from master1 to your bastion
+    - name: COPY THE .kube FOLDER FROM MASTER1 TO BASTION
       fetch:
         src: /root/.kube/config
         dest: /root/.kube/config
         flat: yes
 
-- name: Post installation configuration
+- name: POST INSTALL CONFIG
   hosts: localhost
   tasks:
     - name: make sure you are system:dmin
@@ -56,31 +56,31 @@
     - name: grant user1 to administrator privilege
       shell: oc adm policy add-cluster-role-to-user cluster-admin user1
 
-- name: Create PVs for Users
+- name: CREATE PVS USERS
   hosts: nfs
   tasks:
     - name: Create PVs
       script: ./config/infra/pvs/create_pvs.sh
 
-- name: Create 25 definitions files for PVs 5G size
+- name: CREATE 25 PVs 5 gigs
   hosts: localhost
   tasks:
     - name: Create 25 definitions files 5G size
       script: ./config/infra/pvs/create_pvs_5gigs.sh
 
-- name: Create 25 definitions files for PVs 10G size
+- name: CREATE 25 PVs 10 gigs
   hosts: localhost
   tasks:
     - name: Create 25 definitions files 10G size
       script: ./config/infra/pvs/create_pvs_10gigs.sh
 
-- name: Create all PVs from definitions files
+- name: CREATE ALL PVs FROM DEFINITIONS FILES
   hosts: localhost
   tasks:
     - name: Create 25 definitions files 5G size
       shell: cat /root/pvs/* | oc create -f -
 
-- name: Fix NFS Persistent Volume Recycling
+- name:  FIX NFS PV RECYCLING
   hosts: nodes
   tasks:
     - name: Pulling ose recycler image
@@ -88,7 +88,7 @@
     - name: Tagging ose recycler image
       shell: docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.9.30
 
-- name: Smoke Test
+- name: SMOKE TEST
   hosts: localhost
   tasks:
     - name: Smoke Test
@@ -100,14 +100,14 @@
     - name: CI CD workflow
       script: ./scripts/cicd.sh
 
-- name: HPA configuration on production deployment of openshift-tasks
+- name: HPA CONFIG ON PROD
   hosts: localhost
   tasks:
     - name: HPA configuration
       shell: oc autoscale dc/openshift-tasks --min=1 --max=5 --cpu-percent=70 -n basic-spring-boot-prod
 
-- name: Multitenancy
+- name: MULTITENANCY SETUP
   hosts: localhost
   tasks:
-    - name: Multitenancy
+    - name: MULTITENANCY SETUP
       script: ./config/infra/setup_multitenancy.sh
