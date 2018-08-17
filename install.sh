@@ -33,7 +33,7 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     echo "<<< CREATE USER GROUPS DONE"
 
     echo ">>> CREATE NFS STORAGE"
-    ssh support1.${GUID}.internal "bash -s" -- < ./config/infra/create_pvs.sh
+    ssh support1.${GUID}.internal "bash -s" -- < ./config/infra/pvs/create_pvs.sh
     rm -rf pvs; mkdir pvs
 
     ./config/infra/pvs/create_pvs_5gigs.sh
