@@ -84,7 +84,11 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
 
     echo ">>> SET UP MULTITENANCY"
     ./config/infra/setup_multitenacy.sh
-    echo ">>> SET UP MULTITENANCY DONE"
+    echo "<<< SET UP MULTITENANCY DONE"
+
+    echo ">>> START NODEJS_MONGO_APP SMOKE TEST"
+    ./config/bin/nodejs_mongo_smoke_test.sh
+    echo "<<< START NODEJS_MONGO_APP SMOKE TEST DONE"
 
     echo ">>> SETUP AMY CICD SIMPLE PIPELINE"
     oc login -u Amy -pr3dh4t1!
