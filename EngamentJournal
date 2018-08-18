@@ -8,7 +8,7 @@ Guide
   [root@bastion ~]# cd ocpAdvDepl
 
   Than you can run:
-    [root@bastion ~]# ansible-playbook ./config/tempaltes/ansible_deployment_homework.yaml (ansible Installation)
+    [root@bastion ~]# ansible-playbook ./config/templates/ansible_deployment_homework.yaml (ansible Installation)
     + OR
     [root@bastion ~]# ./install.sh (bash installation)
 
