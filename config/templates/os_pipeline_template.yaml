@@ -31,40 +31,40 @@ items:
                  echo "DEV DEPLOY DONE"
 
                  echo "START DEV SERVICE CHECK"
-                 openshiftVerifyService apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', namespace: 'os-tasks-{GUID}-dev', svcName: 'os-tasks', verbose: 'false'
+                 openshiftVerifyService apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', namespace: 'os-tasks-${GUID}-dev', svcName: 'os-tasks', verbose: 'false'
                  echo "DEV SERVICE CHECK DONE"
                  openshiftTag(srcStream: 'os-tasks', srcTag: 'latest', destStream: 'os-tasks', destTag: 'testready')
 
             stage ("DEPLOY AND TEST IN TEST ENV")
-                 echo "START TEST DEPLOY TO os-tasks-{GUID}-test PROJECT"
-                 openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-{GUID}-test', verbose: 'false', waitTime: ''
+                 echo "START TEST DEPLOY TO os-tasks-${GUID}-test PROJECT"
+                 openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-${GUID}-test', verbose: 'false', waitTime: ''
                  echo "TEST DEPLOY DONE"
 
                  echo "START TEST SERVICE CHECK"
-                 openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-{GUID}-test', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: '10'
+                 openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-${GUID}-test', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: '10'
                  echo "START TEST SERVICE CHECK DONE"
 
             stage ("DEPLOY AND TEST IN STAGE ENV")
-                 echo "START TEST DEPLOY TO os-tasks-{GUID}-stage PROJECT"
-                 openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-{GUID}-stage', verbose: 'false', waitTime: ''
+                 echo "START TEST DEPLOY TO os-tasks-${GUID}-stage PROJECT"
+                 openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-${GUID}-stage', verbose: 'false', waitTime: ''
                  echo "STAGE DEPLOY DONE"
 
                  echo "START STAGE SERVICE CHECK"
-                 openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-{GUID}-stage', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: '10'
+                 openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-${GUID}-stage', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: '10'
                  echo "START STAGE SERVICE CHECK DONE"
 
             stage ("PROMOTE AND VERIFY IN PROD ENV")
 
                  echo "START DEPLOY TO PROD"
-                 openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-{GUID}-prod', verbose: 'false', waitTime: ''
+                 openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-${GUID}-prod', verbose: 'false', waitTime: ''
                  echo "DEPLOY TO PROD DONE"
 
                  echo "START PROD SERVICE CHECK"
-                 openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-{GUID}-prod', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: '10'
+                 openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-${GUID}-prod', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: '10'
                  echo "PROD SERVICE CHECK DONE"
 
                  sleep 30
-                 sh 'curl -i -u "redhat:redhat1!" -H "Content-Length: 0" -X POST http://os-tasks-os-tasks-{GUID}-dev.apps.{GUID}.example.opentlc.com/ws/tasks/task1 | grep Created'
+                 sh 'curl -i -u "redhat:redhat1!" -H "Content-Length: 0" -X POST http://os-tasks-os-tasks-${GUID}-dev.apps.${GUID}.example.opentlc.com/ws/tasks/task1 | grep Created'
           }
 
 kind: List
