@@ -1,23 +1,23 @@
 ---
-- name: >>> PREPATE GUID AND ENV VARIABLES FOR ALL HOSTS
+- name: PREPATE GUID AND ENV VARIABLES FOR ALL HOSTS
   hosts: all
   tasks:
     - name: ALL GUID ENV VARIABLES
       shell: export GUID=`hostname | cut -d"." -f2`; echo "export GUID=$GUID" >> $HOME/.bashrc
 
-- name: >>> CHECK DOCKER INSTALL AND CONFIG
+- name: CHECK DOCKER INSTALL AND CONFIG
   hosts: nodes
   tasks:
     - name: docker restart
       shell: systemctl status docker | grep Active
 
-- name: >>> CHECK NFS SHARED VOLUMES ON HOSTS
+- name: CHECK NFS SHARED VOLUMES ON HOSTS
   hosts: nfs
   tasks:
     - name: CHECK NFS SHARED VOLUMES
       shell: exportfs
 
-- name: >>> INSTALL PACKAGES AND CONFIG AUTH
+- name: INSTALL PACKAGES AND CONFIG AUTH
   hosts: localhost
   tasks:
     - name: CHECK REQUIRED PACKAGES
