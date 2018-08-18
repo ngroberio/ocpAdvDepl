@@ -26,7 +26,7 @@ items:
             stage ("DEPLOY AND VERIFY IN DEV ENV")
 
                  echo "START DEV DEPLOY"
-                 openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: '', verbose: 'false', waitTime: ''
+                 openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-{GUID}-dev', verbose: 'false', waitTime: ''
                  openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: '', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
                  echo "DEV DEPLOY DONE"
 
@@ -36,7 +36,7 @@ items:
                  openshiftTag(srcStream: 'os-tasks', srcTag: 'latest', destStream: 'os-tasks', destTag: 'testready')
 
             stage ("DEPLOY AND TEST IN TEST ENV")
-                 echo "START TEST DEPLOY TO os-tasks-${GUID}-test PROJECT"
+                 echo "START TEST DEPLOY TO os-tasks-{GUID}-test PROJECT"
                  openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-{GUID}-test', verbose: 'false', waitTime: ''
                  echo "TEST DEPLOY DONE"
 
@@ -45,7 +45,7 @@ items:
                  echo "START TEST SERVICE CHECK DONE"
 
             stage ("DEPLOY AND TEST IN STAGE ENV")
-                 echo "START TEST DEPLOY TO os-tasks-${GUID}-stage PROJECT"
+                 echo "START TEST DEPLOY TO os-tasks-{GUID}-stage PROJECT"
                  openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-{GUID}-stage', verbose: 'false', waitTime: ''
                  echo "STAGE DEPLOY DONE"
 
@@ -54,9 +54,9 @@ items:
                  echo "START STAGE SERVICE CHECK DONE"
 
             stage ("PROMOTE AND VERIFY IN PROD ENV")
-                 echo "WAITING FOR INPUT"
-                 input "Should we deploy to Production?"
-                 openshiftTag(srcStream: 'os-tasks', srcTag: 'testready', destStream: 'os-tasks', destTag: 'prodready')
+                 #echo "WAITING FOR INPUT"
+                 #input "Should we deploy to Production?"
+                 #openshiftTag(srcStream: 'os-tasks', srcTag: 'testready', destStream: 'os-tasks', destTag: 'prodready')
 
                  echo "START DEPLOY TO PROD"
                  openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-{GUID}-prod', verbose: 'false', waitTime: ''
