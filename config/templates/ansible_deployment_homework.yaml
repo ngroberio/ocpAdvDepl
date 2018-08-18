@@ -31,7 +31,7 @@
   hosts: localhost
   tasks:
     - name: INITIATE HOSTS
-      script: ./config/bin/initiateHostsTemplate.sh
+      script:  /root/ocpAdvDepl/config/bin/initiateHostsTemplate.sh
 
 - name: CHECK ANSIBLE PREREQUISITES
   import_playbook: /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
@@ -60,19 +60,19 @@
   hosts: nfs
   tasks:
     - name: Create PVs
-      script: ./config/infra/pvs/create_pvs.sh
+      script:  /root/ocpAdvDepl/config/infra/pvs/create_pvs.sh
 
 - name: CREATE 25 PVs 5 gigs
   hosts: localhost
   tasks:
     - name: Create 25 definitions files 5G size
-      script: ./config/infra/pvs/create_pvs_5gigs.sh
+      script:  /root/ocpAdvDepl/config/infra/pvs/create_pvs_5gigs.sh
 
 - name: CREATE 25 PVs 10 gigs
   hosts: localhost
   tasks:
     - name: Create 25 definitions files 10G size
-      script: ./config/infra/pvs/create_pvs_10gigs.sh
+      script:  /root/ocpAdvDepl/config/infra/pvs/create_pvs_10gigs.sh
 
 - name: CREATE ALL PVs FROM DEFINITIONS FILES
   hosts: localhost
@@ -92,13 +92,13 @@
   hosts: localhost
   tasks:
     - name: Smoke Test
-      script: ./config/bin/nodejs_mongo_smoke_test.sh
+      script:  /root/ocpAdvDepl/config/bin/nodejs_mongo_smoke_test.sh
 
 - name: CI CD workflow
   hosts: localhost
   tasks:
     - name: CI CD workflow
-      script: ./config/infra/setup_cicd.sh
+      script:  /root/ocpAdvDepl/config/infra/setup_cicd.sh
 
 - name: HPA CONFIG ON PROD
   hosts: localhost
@@ -110,4 +110,4 @@
   hosts: localhost
   tasks:
     - name: MULTITENANCY SETUP
-      script: ./config/infra/setup_multitenancy.sh
+      script:  /root/ocpAdvDepl/config/infra/setup_multitenancy.sh
