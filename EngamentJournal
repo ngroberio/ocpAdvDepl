@@ -90,6 +90,7 @@ Engagement journal
   HPA is configured and working on production deployment of openshift-tasks
   ->These are related templates below:
     ./config/templates/os_pipeline_template.yaml
+    ./config/templates/setup_jenkins.yaml
   -> These are install scripts lines related below:
       ./config/infra/setup_cicd.sh
 
