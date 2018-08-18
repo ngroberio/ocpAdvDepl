@@ -57,7 +57,7 @@ items:
             initialDelaySeconds: 420
             periodSeconds: 360
             successThreshold: 1
-            timeoutSeconds: 750
+            timeoutSeconds: 800
           name: jenkins
           readinessProbe:
             failureThreshold: 5
@@ -68,13 +68,13 @@ items:
             initialDelaySeconds: 3
             periodSeconds: 10
             successThreshold: 1
-            timeoutSeconds: 750
+            timeoutSeconds: 800
           resources:
             limits:
-              cpu: 500mi
+              cpu: "500mi"
               memory: 1Gi
             requests:
-              cpu: 400mi
+              cpu: "500mi"
               memory: 512Mi
           securityContext:
             capabilities: {}
