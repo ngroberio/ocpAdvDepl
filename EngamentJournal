@@ -41,18 +41,28 @@ Ansible playbook file ansible_deployment_homework.yaml or the script install.sh 
 
 ++ Provisioned Environment Hosts
   This one-click installation script applies to the following host environment.
-  Bastion host: bastion.$GUID.example.opentlc.com, bastion.$GUID.internal
-  Load balancer: loadbalancer1.$GUID.example.opentlc.com, loadbalancer1.$GUID.internal
-  3 OpenShift master nodes: master{1,2,3}.$GUID.internal
-  2 OpenShift infrastructure nodes: infranode{1,2}.$GUID.example.opentlc.com, infranode{1,2}.$GUID.internal
-  4 OpenShift worker nodes: node{1-4}.$GUID.internal
-  NFS server: support1.$GUID.internal
+  Bastion host:
+    bastion.$GUID.example.opentlc.com,
+    bastion.$GUID.internal
+  Load balancer:
+    loadbalancer1.$GUID.example.opentlc.com,
+    loadbalancer1.$GUID.internal
+  3 OpenShift master nodes:
+    master{1,2,3}.$GUID.internal
+  2 OpenShift infrastructure nodes:
+    infranode{1,2}.$GUID.example.opentlc.com,
+    infranode{1,2}.$GUID.internal
+  4 OpenShift worker nodes:
+    node{1-4}.$GUID.internal
+  NFS server:
+    support1.$GUID.internal
 
 Engagement journal
 
 ++ Basic Requirements
-  User user1 can log in as administrator on the master console. The password is r3dh4t1!
+  User Amy can log in as administrator on the master console with r3dh4t1! as password.
   Registry console URL is https://registry-console-default.apps.$GUID.example.opentlc.com.
+  Master console URL is https://loadbalancer.$GUID.example.opentlc.com
   25 PVs with a size of 5 GB and ReadWriteOnce  access mode have been created.
   25 PVs with a size of 10 GB and ReadWriteMany access mode have been created.
   Create and destroy the nodejs-mongo-persistent application by using smoking test scripts.
