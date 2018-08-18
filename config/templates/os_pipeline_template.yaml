@@ -26,7 +26,7 @@ items:
             stage ("DEPLOY AND VERIFY IN DEV ENV")
 
                  echo "START DEV DEPLOY"
-                 openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-{GUID}-dev', verbose: 'false', waitTime: ''
+                 openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: '', verbose: 'false', waitTime: ''
                  openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: '', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
                  echo "DEV DEPLOY DONE"
 
