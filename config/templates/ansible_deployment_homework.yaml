@@ -92,19 +92,19 @@
   hosts: localhost
   tasks:
     - name: Smoke Test
-      script: ./scripts/nodejs_mongo_app.sh
+      script: ./config/bin/nodejs_mongo_smoke_test.sh
 
 - name: CI CD workflow
   hosts: localhost
   tasks:
     - name: CI CD workflow
-      script: ./scripts/cicd.sh
+      script: ./config/infra/setup_cicd.sh
 
 - name: HPA CONFIG ON PROD
   hosts: localhost
   tasks:
     - name: HPA configuration
-      shell: oc autoscale dc/openshift-tasks --min=1 --max=5 --cpu-percent=70 -n basic-spring-boot-prod
+      shell: oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=80 -n os-tasks-${GUID}-prod
 
 - name: MULTITENANCY SETUP
   hosts: localhost
