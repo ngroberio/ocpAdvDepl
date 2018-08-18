@@ -7,7 +7,13 @@ oc new-project os-tasks-${GUID}-prod
 echo "<<< SETUP AMY CICD SIMPLE PIPELINE DONE"
 
 echo ">>> SETUP JENKINS"
-oc new-app jenkins-persistent -p ENABLE_OAUTH=true -e JENKINS_PASSWORD=jenkins -n os-tasks-${GUID}-dev
+oc new-app jenkins-persistent -p ENABLE_OAUTH=true -e JENKINS_PASSWORD=jenkins \
+  -p MEMORY_LIMIT=3Gi \
+  -p MEMORY_REQUEST=2Gi \
+  -p CPU_REQUEST=1 \
+  -p CPU_LIMIT=3 \
+  -p JVM_ARCH=x86_64 \
+  -n os-tasks-${GUID}-dev
 
 echo ">>>>> ADD JENKINS USER PERMISSIONS TO SERVICEACCOUNT"
 oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:jenkins -n os-tasks-${GUID}-dev
