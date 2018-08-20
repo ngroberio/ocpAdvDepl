@@ -26,8 +26,8 @@ oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param 
 oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param SOURCE_REPOSITORY_URL=https://github.com/OpenShiftDemos/openshift-tasks.git --param SOURCE_REPOSITORY_REF=master --param CONTEXT_DIR=/ -n os-tasks-${GUID}-stage
 oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param SOURCE_REPOSITORY_URL=https://github.com/OpenShiftDemos/openshift-tasks.git --param SOURCE_REPOSITORY_REF=master --param CONTEXT_DIR=/ -n os-tasks-${GUID}-prod
 
-cat /root/ocpAdvDepl/config/templates/os_pipeline_template.yaml | sed -e "s:{GUID}:$GUID:g" > ./os-pipeline.yaml
-oc create -f ./os-pipeline.yaml -n os-tasks-${GUID}-dev
+cat /root/ocpAdvDepl/config/templates/os_pipeline_template.yaml | sed -e "s:{GUID}:$GUID:g" > /root/ocpAdvDepl/config/templates/os-pipeline.yaml
+oc create -f /root/ocpAdvDepl/config/templates/os-pipeline.yaml -n os-tasks-${GUID}-dev
 echo "<<< SETUP OPENSHIFT TO RUN PIPELINE DONE"
 
 echo ">>> JENKINS LIVENESS CHECK"
