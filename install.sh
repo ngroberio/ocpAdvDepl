@@ -47,7 +47,7 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     #ssh support1.${GUID}.internal "bash -s" -- < ./config/infra/pvs/create_pvs.sh
     ./config/infra/pvs/create_pvs.sh
     ./config/infra/pvs/create_pvs_5gigs.sh
-    ./config/infra/pvs/create_pvs_10gigs.sh
+    ./config/infra/pvs/create_pvs_10Gigs.sh
 
     cat ./pvs/* | oc create -f -
 
@@ -77,6 +77,10 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     echo ">>> START NODEJS_MONGO_APP SMOKE TEST"
     ./config/bin/nodejs_mongo_smoke_test.sh
     echo "<<< START NODEJS_MONGO_APP SMOKE TEST DONE"
+
+    echo ">>> SETUP HA UTOSCALER"
+    oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=80 -n os-tasks-${GUID}-prod
+    echo "<<< SETUP AUTOSCALER DONE"
 
     echo ">>> SETUP AND RUN CICD SIMPLE PIPELINE"
     ./config/infra/setup_cicd.sh
