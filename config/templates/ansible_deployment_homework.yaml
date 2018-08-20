@@ -110,4 +110,4 @@
   hosts: localhost
   tasks:
     - name: MULTITENANCY SETUP
-      script:  /root/ocpAdvDepl/config/infra/setup_multitenancy.sh
+      script:  /root/ocpAdvDepl/config/infra/setup_multitenacy.sh
