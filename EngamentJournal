@@ -79,6 +79,7 @@ Engagement journal
   There is a load balancer/DNS for both infranodes called *.apps.$GUID.example.opentlc.com
   There are at two infranodes, labeled env=infra
   ->These are related templates below:
+    oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=80 -n os-tasks-${GUID}-prod
     ./config/templates/hosts_template.yaml
 
 ++ Environment Configuration
