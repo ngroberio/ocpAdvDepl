@@ -27,7 +27,7 @@
           - atomic-openshift-clients
         state: present
 
-- name: INITIATE HOSTS FILE
+- name: INITIATE HOSTS FILES
   hosts: localhost
   tasks:
     - name: INITIATE HOSTS
