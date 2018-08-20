@@ -31,7 +31,7 @@
   hosts: localhost
   tasks:
     - name: INITIATE HOSTS
-      script:  /root/ocpAdvDepl/config/bin/initiateHostsTemplate.sh
+      script:  /root/ocpAdvDepl/config/bin/initiateHostsTemplate_ans.sh
 
 - name: CHECK ANSIBLE PREREQUISITES
   import_playbook: /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
