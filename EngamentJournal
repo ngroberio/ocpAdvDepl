@@ -10,7 +10,7 @@ Guide
   Than you can run:
     ansible-playbook ./config/templates/ansible_deployment_homework.yaml (ansible Installation)
     + OR
-    ./install.sh (bash installation)
+    ./install.sh (bash installation that is my main resolution)
 
 ++ Uninstallation
   If for any reason you want to clean up your environment run:
