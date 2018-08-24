@@ -1,3 +1,5 @@
+export GUID=`hostname | cut -d"." -f2`
+
 echo ">>> SETUP AMY CICD SIMPLE PIPELINE"
 oc login -u Amy -pr3dh4t1!
 oc new-project os-tasks-${GUID}-dev

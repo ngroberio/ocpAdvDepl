@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set ff=unix
 
 export GUID=`hostname|awk -F. '{print $2}'`
 export volsize="10Gi"

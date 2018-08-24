@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+export GUID=`hostname | cut -d"." -f2`
 
 mkdir -p /srv/nfs/user-vols/pv{1..200}
 
