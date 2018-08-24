@@ -2,6 +2,7 @@
 
 echo ">>> INITIATE ENV VARIABLES"
 export GUID=`hostname|awk -F. '{print $2}'`
+echo "export GUID=$GUID" >> $HOME/.bashrc
 export INTERNAL=internal
 export EXTERNAL=example.opentlc.com
 export CURRENT_PATH=`pwd`
