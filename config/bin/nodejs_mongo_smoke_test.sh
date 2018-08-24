@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-GUID=`hostname|awk -F. '{print $2}'`
+export GUID=`hostname|awk -F. '{print $2}'`
 oc new-project smoke-test-nodejs
 oc new-app nodejs-mongo-persistent
 sleep 70
