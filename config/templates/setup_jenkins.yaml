@@ -84,7 +84,8 @@ objects:
             httpGet:
               path: /login
               port: 8080
-            initialDelaySeconds: 60
+            initialDelaySeconds: 450
+            periodSeconds: 360
             timeoutSeconds: 750
           name: jenkins
           readinessProbe:
