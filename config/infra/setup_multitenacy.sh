@@ -13,7 +13,7 @@ oc create clusterquota clusterquota-$OCP_USERNAME \
  --hard requests.memory=6Gi \
  --hard requests.cpu=5 \
  --hard limits.cpu=25  \
- --hard limits.memory=40Gi \
+ --hard limits.memory=50Gi \
  --hard configmaps=25 \
  --hard persistentvolumeclaims=25  \
  --hard services=25
