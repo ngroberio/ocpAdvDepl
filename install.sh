@@ -50,7 +50,7 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     ./config/infra/pvs/create_pvs_5gigs.sh
     ./config/infra/pvs/create_pvs_10Gigs.sh
 
-    cat ./pvs/* | oc create -f -
+    cat /root/pvs/* | oc create -f -
 
     echo "<<< CREATE NFS STORAGE DONE"
 
