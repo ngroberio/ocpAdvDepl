@@ -96,7 +96,11 @@ objects:
             timeoutSeconds: 750
           resources:
             limits:
+              cpu: "4"
               memory: ${MEMORY_LIMIT}
+            requests:
+              cpu: "1"
+              memory: 2Gi
           securityContext:
             capabilities: {}
             privileged: false
@@ -124,7 +128,7 @@ parameters:
 - description: Maximum amount of memory the container can use.
   displayName: Memory Limit
   name: MEMORY_LIMIT
-  value: 1Gi
+  value: 4Gi
 - description: The name of the OpenShift Service exposed for the Jenkins container.
   displayName: Jenkins Service Name
   name: JENKINS_SERVICE_NAME
@@ -133,7 +137,7 @@ parameters:
   displayName: Volume Capacity
   name: VOLUME_CAPACITY
   required: true
-  value: 1Gi
+  value: 2Gi
 - description: Jenkins version to deploy
   displayName: Jenkins version
   name: JENKINS_VERSION
