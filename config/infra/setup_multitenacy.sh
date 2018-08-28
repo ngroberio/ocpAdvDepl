@@ -5,7 +5,7 @@ export GUID=`hostname | cut -d"." -f2`
 oc adm groups new alpha Amy Andrew
 oc adm groups new beta Brian Betty
 
-for OCP_USERNAME in Amy Andrew Brian Betty; do
+for OCP_USERNAME in amy andrew brian betty; do
 
 oc create clusterquota clusterquota-$OCP_USERNAME \
  --project-annotation-selector=openshift.io/requester=$OCP_USERNAME \
