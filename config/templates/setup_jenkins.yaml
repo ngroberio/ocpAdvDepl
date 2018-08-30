@@ -72,6 +72,9 @@ objects:
   kind: DeploymentConfig
   metadata:
     creationTimestamp: null
+    generation: 1
+    labels:
+      app: jenkins-persistent
     name: ${JENKINS_SERVICE_NAME}
   spec:
     replicas: 1
