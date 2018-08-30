@@ -18,6 +18,12 @@ oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:jenki
 oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:jenkins -n os-tasks-${GUID}-test
 oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:jenkins -n os-tasks-${GUID}-stage
 oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:jenkins -n os-tasks-${GUID}-prod
+
+oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:default -n os-tasks-${GUID}-dev
+oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:default -n os-tasks-${GUID}-test
+oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:default -n os-tasks-${GUID}-stage
+oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:default -n os-tasks-${GUID}-prod
+
 oc policy add-role-to-group system:image-puller system:serviceaccounts:os-tasks-${GUID}-test -n os-tasks-${GUID}-dev
 oc policy add-role-to-group system:image-puller system:serviceaccounts:os-tasks-${GUID}-stage -n os-tasks-${GUID}-dev
 oc policy add-role-to-group system:image-puller system:serviceaccounts:os-tasks-${GUID}-prod -n os-tasks-${GUID}-dev
