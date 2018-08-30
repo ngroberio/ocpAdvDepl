@@ -86,7 +86,8 @@ objects:
           name: ${JENKINS_SERVICE_NAME}
       spec:
         containers:
-         - env:
+        - capabilities: {}
+        - env:
           - name: OPENSHIFT_ENABLE_OAUTH
             value: "true"
           - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
@@ -99,7 +100,6 @@ objects:
             value: jenkins
           - name: JNLP_SERVICE_NAME
             value: jenkins-jnlp
-        - capabilities: {}
           image: jenkins
           imagePullPolicy: IfNotPresent
           livenessProbe:
