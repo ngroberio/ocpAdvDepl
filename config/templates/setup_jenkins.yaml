@@ -98,7 +98,7 @@ objects:
           - name: JENKINS_SERVICE_NAME
             value: jenkins
           - name: JNLP_SERVICE_NAME
-            value: jenkins-jnlp
+            value: jenkins-jnlp              
         - capabilities: {}
           image: jenkins
           imagePullPolicy: IfNotPresent
