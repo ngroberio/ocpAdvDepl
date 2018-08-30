@@ -131,7 +131,6 @@ objects:
           - name: JNLP_SERVICE_NAME
             value: jenkins-jnlp
           image: jenkins
-          name: jenkins           
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         volumes:
