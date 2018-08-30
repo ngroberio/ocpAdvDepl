@@ -120,7 +120,7 @@ objects:
             timeoutSeconds: 750
           resources:
             limits:
-              cpu: "1"
+              cpu: "500m"
               memory: ${MEMORY_LIMIT}
             requests:
               cpu: "1"
