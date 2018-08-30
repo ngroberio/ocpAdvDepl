@@ -86,7 +86,19 @@ objects:
           name: ${JENKINS_SERVICE_NAME}
       spec:
         containers:
-        - capabilities: {}
+        - env:
+          - name: OPENSHIFT_ENABLE_OAUTH
+            value: "true"
+          - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
+            value: "true"
+          - name: KUBERNETES_MASTER
+            value: https://kubernetes.default:443
+          - name: KUBERNETES_TRUST_CERTIFICATES
+            value: "true"
+          - name: JENKINS_SERVICE_NAME
+            value: jenkins
+          - name: JNLP_SERVICE_NAME
+            value: jenkins-jnlp
           image: jenkins
           imagePullPolicy: IfNotPresent
           livenessProbe:
@@ -117,20 +129,6 @@ objects:
           volumeMounts:
           - mountPath: /var/jenkins_home
             name: ${JENKINS_SERVICE_NAME}-data
-        - env:
-          - name: OPENSHIFT_ENABLE_OAUTH
-            value: "true"
-          - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
-            value: "true"
-          - name: KUBERNETES_MASTER
-            value: https://kubernetes.default:443
-          - name: KUBERNETES_TRUST_CERTIFICATES
-            value: "true"
-          - name: JENKINS_SERVICE_NAME
-            value: jenkins
-          - name: JNLP_SERVICE_NAME
-            value: jenkins-jnlp
-          image: jenkins
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         volumes:
