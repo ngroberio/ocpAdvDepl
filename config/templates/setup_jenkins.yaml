@@ -17,6 +17,15 @@ objects:
   spec:
     dockerImageRepository: docker.io/library/jenkins
 - apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    annotations:
+      serviceaccounts.openshift.io/oauth-redirectreference.jenkins: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"jenkins"}}'
+    creationTimestamp: null
+    labels:
+      app: jenkins-persistent
+    name: jenkins
+- apiVersion: v1
   kind: Service
   metadata:
     creationTimestamp: null
@@ -77,6 +86,19 @@ objects:
           name: ${JENKINS_SERVICE_NAME}
       spec:
         containers:
+        - env:
+          - name: OPENSHIFT_ENABLE_OAUTH
+            value: "true"
+          - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
+            value: "true"
+          - name: KUBERNETES_MASTER
+            value: https://kubernetes.default:443
+          - name: KUBERNETES_TRUST_CERTIFICATES
+            value: "true"
+          - name: JENKINS_SERVICE_NAME
+            value: jenkins
+          - name: JNLP_SERVICE_NAME
+            value: jenkins-jnlp
         - capabilities: {}
           image: jenkins
           imagePullPolicy: IfNotPresent
