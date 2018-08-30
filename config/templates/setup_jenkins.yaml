@@ -142,4 +142,4 @@ parameters:
   displayName: Jenkins version
   name: JENKINS_VERSION
   required: true
-  value: "2.0"
+  value: "latest"
