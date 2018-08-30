@@ -23,7 +23,7 @@ done
 pwd=`pwd`
 export pwd=$pwd/config/templates/multi_template.yaml
 echo ">>> CREATE TEMPLATE FROM ${pwd}"
-oc create -f $pwd
+#oc create -f $pwd
 echo "<<< CREATE TEMPLATE DONE"
 
 ansible masters -m shell -a "sed -i 's/projectRequestTemplate.*/projectRequestTemplate\: \"default\/project-request\"/g' /etc/origin/master/master-config.yaml"
