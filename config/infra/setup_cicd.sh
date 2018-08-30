@@ -1,8 +1,8 @@
 export GUID=`hostname | cut -d"." -f2`
 
 echo ">>> SETUP AMY CICD SIMPLE PIPELINE"
-#oc login -u Amy -pr3dh4t1!
-oc login -u system:admin
+oc login -u Amy -pr3dh4t1!
+#oc login -u system:admin
 oc new-project os-tasks-${GUID}-dev
 oc new-project os-tasks-${GUID}-test
 oc new-project os-tasks-${GUID}-stage
