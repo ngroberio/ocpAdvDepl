@@ -86,7 +86,6 @@ objects:
           name: ${JENKINS_SERVICE_NAME}
       spec:
         containers:
-          image: jenkins
         - env:
           - name: OPENSHIFT_ENABLE_OAUTH
             value: "true"
@@ -101,6 +100,7 @@ objects:
           - name: JNLP_SERVICE_NAME
             value: jenkins-jnlp
         - capabilities: {}
+          image: jenkins
           imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
