@@ -83,8 +83,8 @@ objects:
     namespace: ${PROJECT_NAME}
   spec:
     hard:
-      cpu: "4"
-      memory: 25Gi
+      cpu: "2"
+      memory: 16Gi
     scopes:
     - NotTerminating
 - apiVersion: v1
@@ -98,8 +98,8 @@ objects:
     namespace: ${PROJECT_NAME}
   spec:
     hard:
-      cpu: "4"
-      memory: 25Gi
+      cpu: "2"
+      memory: 16Gi
 - apiVersion: v1
   kind: LimitRange
   metadata:
@@ -112,23 +112,23 @@ objects:
   spec:
     limits:
     - max:
-        cpu: "1"
-        memory: 2Gi
+        cpu: 500m
+        memory: 1Gi
       min:
-        cpu: "100m"
+        cpu: 10m
         memory: 128Mi
       type: Pod
     - default:
-        cpu: "250m"
+        cpu: 100m
         memory: 256Mi
       defaultRequest:
-        cpu: "250m"
-        memory: 500Mi
+        cpu: 100m
+        memory: 256Mi
       max:
-        cpu: "1"
-        memory: 2Gi
+        cpu: 500m
+        memory: 1Gi
       min:
-        cpu: "100m"
+        cpu: 10m
         memory: 128Mi
       type: Container
 parameters:
