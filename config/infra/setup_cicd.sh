@@ -5,7 +5,6 @@ oc login -u Amy -pr3dh4t1!
 #oc login -u system:admin
 oc new-project os-tasks-${GUID}-dev
 oc new-project os-tasks-${GUID}-test
-oc new-project os-tasks-${GUID}-stage
 oc new-project os-tasks-${GUID}-prod
 echo "<<< SETUP AMY CICD SIMPLE PIPELINE DONE"
 
@@ -17,23 +16,19 @@ oc new-app -f ./config/templates/setup_jenkins.yaml -e OPENSHIFT_ENABLE_OAUTH=tr
 echo ">>>>> ADD JENKINS USER PERMISSIONS TO SERVICEACCOUNT"
 oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:jenkins -n os-tasks-${GUID}-dev
 oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:jenkins -n os-tasks-${GUID}-test
-oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:jenkins -n os-tasks-${GUID}-stage
 oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:jenkins -n os-tasks-${GUID}-prod
 
 oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:default -n os-tasks-${GUID}-dev
 oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:default -n os-tasks-${GUID}-test
-oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:default -n os-tasks-${GUID}-stage
 oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:default -n os-tasks-${GUID}-prod
 
 oc policy add-role-to-group system:image-puller system:serviceaccounts:os-tasks-${GUID}-test -n os-tasks-${GUID}-dev
-oc policy add-role-to-group system:image-puller system:serviceaccounts:os-tasks-${GUID}-stage -n os-tasks-${GUID}-dev
 oc policy add-role-to-group system:image-puller system:serviceaccounts:os-tasks-${GUID}-prod -n os-tasks-${GUID}-dev
 echo "<<< SETUP JENKINS DONE"
 
 echo ">>> SETUP OPENSHIFT TO RUN PIPELINE"
 oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param SOURCE_REPOSITORY_URL=https://github.com/OpenShiftDemos/openshift-tasks.git --param SOURCE_REPOSITORY_REF=master --param CONTEXT_DIR=/ -n os-tasks-${GUID}-dev
 oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param SOURCE_REPOSITORY_URL=https://github.com/OpenShiftDemos/openshift-tasks.git --param SOURCE_REPOSITORY_REF=master --param CONTEXT_DIR=/ -n os-tasks-${GUID}-test
-oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param SOURCE_REPOSITORY_URL=https://github.com/OpenShiftDemos/openshift-tasks.git --param SOURCE_REPOSITORY_REF=master --param CONTEXT_DIR=/ -n os-tasks-${GUID}-stage
 oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param SOURCE_REPOSITORY_URL=https://github.com/OpenShiftDemos/openshift-tasks.git --param SOURCE_REPOSITORY_REF=master --param CONTEXT_DIR=/ -n os-tasks-${GUID}-prod
 
 echo ">>> SETUP HA UTOSCALER"

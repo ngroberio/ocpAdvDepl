@@ -44,15 +44,6 @@ items:
                  openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-{GUID}-test', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: '10'
                  echo "START TEST SERVICE CHECK DONE"
 
-            stage ("DEPLOY AND TEST IN STAGE ENV")
-                 echo "START TEST DEPLOY TO os-tasks-{GUID}-stage PROJECT"
-                 openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-{GUID}-stage', verbose: 'false', waitTime: ''
-                 echo "STAGE DEPLOY DONE"
-
-                 echo "START STAGE SERVICE CHECK"
-                 openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'os-tasks-{GUID}-stage', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: '10'
-                 echo "START STAGE SERVICE CHECK DONE"
-
             stage ("PROMOTE AND VERIFY IN PROD ENV")
 
                  echo "START DEPLOY TO PROD"
