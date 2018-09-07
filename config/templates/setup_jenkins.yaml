@@ -124,7 +124,7 @@ objects:
               memory: ${MEMORY_LIMIT}
             requests:
               cpu: "500m"
-              memory: 1Gi
+              memory: 512Mi
           securityContext:
             capabilities: {}
             privileged: false
@@ -161,7 +161,7 @@ parameters:
   displayName: Volume Capacity
   name: VOLUME_CAPACITY
   required: true
-  value: 2Gi
+  value: 1Gi
 - description: Jenkins version to deploy
   displayName: Jenkins version
   name: JENKINS_VERSION
