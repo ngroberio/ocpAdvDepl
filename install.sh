@@ -71,10 +71,6 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     oc label node node3.${GUID}.internal client=common
     echo "<<< SET UP DEDICATED NODES DONE"
 
-    echo ">>> SET UP MULTITENANCY"
-    ./config/infra/setup_multitenacy.sh
-    echo "<<< SET UP MULTITENANCY DONE"
-
     echo ">>> START NODEJS_MONGO_APP SMOKE TEST"
     ./config/bin/nodejs_mongo_smoke_test.sh
     echo "<<< START NODEJS_MONGO_APP SMOKE TEST DONE"
@@ -85,6 +81,10 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
 
     echo ">>> SETUP AND RUN CICD SIMPLE PIPELINE"
     ./config/infra/setup_cicd.sh
+
+    echo ">>> SET UP MULTITENANCY"
+    ./config/infra/setup_multitenacy.sh
+    echo "<<< SET UP MULTITENANCY DONE"
 
 else
     echo ">>> PREREQUITES RUN FAILED"
