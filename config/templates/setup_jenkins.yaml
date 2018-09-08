@@ -89,27 +89,15 @@ objects:
           name: ${JENKINS_SERVICE_NAME}
       spec:
         containers:
-        - env:
-          - name: OPENSHIFT_ENABLE_OAUTH
-            value: "true"
-          - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
-            value: "true"
-          - name: KUBERNETES_MASTER
-            value: https://kubernetes.default:443
-          - name: KUBERNETES_TRUST_CERTIFICATES
-            value: "true"
-          - name: JENKINS_SERVICE_NAME
-            value: jenkins
-          - name: JNLP_SERVICE_NAME
-            value: jenkins-jnlp
+        - capabilities: {}
           image: jenkins
           imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
               path: /login
               port: 8080
-            initialDelaySeconds: 450
-            periodSeconds: 360
+            initialDelaySeconds: 60
+            periodSeconds: 3
             timeoutSeconds: 750
           name: jenkins
           readinessProbe:
@@ -124,7 +112,7 @@ objects:
               memory: ${MEMORY_LIMIT}
             requests:
               cpu: "500m"
-              memory: 512Mi
+              memory: ${MEMORY_LIMIT}
           securityContext:
             capabilities: {}
             privileged: false
