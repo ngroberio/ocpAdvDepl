@@ -112,10 +112,10 @@ objects:
   spec:
     limits:
     - max:
-        cpu: 500m
-        memory: 1Gi
+        cpu: "1"
+        memory: 2Gi
       min:
-        cpu: 10m
+        cpu: 25m
         memory: 128Mi
       type: Pod
     - default:
@@ -125,8 +125,8 @@ objects:
         cpu: 100m
         memory: 256Mi
       max:
-        cpu: 500m
-        memory: 1Gi
+        cpu: "1"
+        memory: 2Gi
       min:
         cpu: 10m
         memory: 128Mi
