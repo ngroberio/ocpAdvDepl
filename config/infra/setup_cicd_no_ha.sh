@@ -9,7 +9,7 @@ echo "<<< SETUP AMY CICD SIMPLE PIPELINE DONE"
 
 echo ">>> SETUP JENKINS"
 #oc new-app jenkins-persistent -p ENABLE_OAUTH=true -e JENKINS_PASSWORD=jenkins -n os-tasks-${GUID}-dev
-oc create -f /root/ocpAdvDepl/config/templates/setup_jenkins.yaml -n os-tasks-${GUID}-dev
+oc create -f /root/ocpAdvDepl/config/templates/setup_jenkins.yaml -p ENABLE_OAUTH=true -e JENKINS_PASSWORD=jenkins -n os-tasks-${GUID}-dev
 
 echo ">>>>> ADD JENKINS USER PERMISSIONS TO SERVICEACCOUNT"
 oc policy add-role-to-user edit system:serviceaccount:os-tasks-${GUID}-dev:jenkins -n os-tasks-${GUID}-dev
