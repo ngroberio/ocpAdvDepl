@@ -89,15 +89,27 @@ objects:
           name: ${JENKINS_SERVICE_NAME}
       spec:
         containers:
-        - capabilities: {}
+        - env:
+          - name: OPENSHIFT_ENABLE_OAUTH
+            value: "true"
+          - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
+            value: "true"
+          - name: KUBERNETES_MASTER
+            value: https://kubernetes.default:443
+          - name: KUBERNETES_TRUST_CERTIFICATES
+            value: "true"
+          - name: JENKINS_SERVICE_NAME
+            value: jenkins
+          - name: JNLP_SERVICE_NAME
+            value: jenkins-jnlp
           image: jenkins
           imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
               path: /login
               port: 8080
-            initialDelaySeconds: 60
-            periodSeconds: 3
+            initialDelaySeconds: 450
+            periodSeconds: 360
             timeoutSeconds: 750
           name: jenkins
           readinessProbe:
@@ -108,11 +120,11 @@ objects:
             timeoutSeconds: 750
           resources:
             limits:
-              cpu: ${CPU_LIMIT}
+              cpu: "1"
               memory: ${MEMORY_LIMIT}
             requests:
-              cpu: ${CPU_LIMIT}
-              memory: ${MEMORY_LIMIT}
+              cpu: "1"
+              memory: 1Gi
           securityContext:
             capabilities: {}
             privileged: false
@@ -141,10 +153,6 @@ parameters:
   displayName: Memory Limit
   name: MEMORY_LIMIT
   value: 2Gi
-- description: Maximum amount of CPU the container can use.
-  displayName: CPU Limit
-  name: CPU_LIMIT
-  value: "1"
 - description: The name of the OpenShift Service exposed for the Jenkins container.
   displayName: Jenkins Service Name
   name: JENKINS_SERVICE_NAME
@@ -153,7 +161,7 @@ parameters:
   displayName: Volume Capacity
   name: VOLUME_CAPACITY
   required: true
-  value: 5Gi
+  value: 2Gi
 - description: Jenkins version to deploy
   displayName: Jenkins version
   name: JENKINS_VERSION
