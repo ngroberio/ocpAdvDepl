@@ -144,7 +144,7 @@ parameters:
 - description: Maximum amount of CPU the container can use.
   displayName: CPU Limit
   name: CPU_LIMIT
-  value: 1
+  value: "1"
 - description: The name of the OpenShift Service exposed for the Jenkins container.
   displayName: Jenkins Service Name
   name: JENKINS_SERVICE_NAME
