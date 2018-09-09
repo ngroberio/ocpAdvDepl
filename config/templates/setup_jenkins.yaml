@@ -161,7 +161,7 @@ parameters:
   displayName: Volume Capacity
   name: VOLUME_CAPACITY
   required: true
-  value: 2Gi
+  value: 5Gi
 - description: Jenkins version to deploy
   displayName: Jenkins version
   name: JENKINS_VERSION
