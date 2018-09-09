@@ -123,8 +123,8 @@ objects:
               cpu: "1"
               memory: ${MEMORY_LIMIT}
             requests:
-              cpu: "1"
-              memory: 1Gi
+              cpu: "500m"
+              memory: 512Mi
           securityContext:
             capabilities: {}
             privileged: false
