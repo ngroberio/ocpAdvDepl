@@ -202,18 +202,18 @@ master3.{GUID}.internal
 
 [nodes]
 ## These are the masters
-master1.{GUID}.internal openshift_hostname=master1.{GUID}.internal  openshift_node_labels="{'env': 'master', 'cluster': '{GUID}'}"
-master2.{GUID}.internal openshift_hostname=master2.{GUID}.internal  openshift_node_labels="{'env': 'master', 'cluster': '{GUID}'}"
-master3.{GUID}.internal openshift_hostname=master3.{GUID}.internal  openshift_node_labels="{'env': 'master', 'cluster': '{GUID}'}"
+master1.{GUID}.internal openshift_hostname=master1.{GUID}.internal  openshift_node_labels="{'env': 'master', 'cluster': '{GUID}'}" openshift_node_group_name='node-config-master'
+master2.{GUID}.internal openshift_hostname=master2.{GUID}.internal  openshift_node_labels="{'env': 'master', 'cluster': '{GUID}'}" openshift_node_group_name='node-config-master'
+master3.{GUID}.internal openshift_hostname=master3.{GUID}.internal  openshift_node_labels="{'env': 'master', 'cluster': '{GUID}'}" openshift_node_group_name='node-config-master'
 
 ## These are infranodes
-infranode1.{GUID}.internal openshift_hostname=infranode1.{GUID}.internal  openshift_node_labels="{'env':'infra', 'cluster': '{GUID}'}"
-infranode2.{GUID}.internal openshift_hostname=infranode2.{GUID}.internal  openshift_node_labels="{'env':'infra', 'cluster': '{GUID}'}"
+infranode1.{GUID}.internal openshift_hostname=infranode1.{GUID}.internal  openshift_node_labels="{'env':'infra', 'cluster': '{GUID}'}" openshift_node_group_name='node-config-infra'
+infranode2.{GUID}.internal openshift_hostname=infranode2.{GUID}.internal  openshift_node_labels="{'env':'infra', 'cluster': '{GUID}'}" openshift_node_group_name='node-config-infra'
 
 ## These are regular nodes
-node1.{GUID}.internal openshift_hostname=node1.{GUID}.internal  openshift_node_labels="{'env':'app', 'cluster': '{GUID}'}"
-node2.{GUID}.internal openshift_hostname=node2.{GUID}.internal  openshift_node_labels="{'env':'app', 'cluster': '{GUID}'}"
-node3.{GUID}.internal openshift_hostname=node3.{GUID}.internal  openshift_node_labels="{'env':'app', 'cluster': '{GUID}'}"
+node1.{GUID}.internal openshift_hostname=node1.{GUID}.internal  openshift_node_labels="{'env':'app', 'cluster': '{GUID}'}" openshift_node_group_name='node-config-compute'
+node2.{GUID}.internal openshift_hostname=node2.{GUID}.internal  openshift_node_labels="{'env':'app', 'cluster': '{GUID}'}" openshift_node_group_name='node-config-compute'
+node3.{GUID}.internal openshift_hostname=node3.{GUID}.internal  openshift_node_labels="{'env':'app', 'cluster': '{GUID}'}" openshift_node_group_name='node-config-compute'
 
 [nfs]
 support1.{GUID}.internal openshift_hostname=support1.{GUID}.internal
