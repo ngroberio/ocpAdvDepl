@@ -18,7 +18,7 @@ containerized=false
 openshift_disable_check="memory_availability"
 
 # default project node selector
-osm_default_node_selector='client=common'
+osm_default_node_selector='env=app'
 openshift_hosted_infra_selector="env=infra"
 
 ###########################################################################
