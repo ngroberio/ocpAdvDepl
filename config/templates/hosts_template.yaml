@@ -29,7 +29,7 @@ openshift_master_api_port=443
 openshift_master_console_port=443
 
 openshift_master_cluster_method=native
-openshift_master_cluster_hostname=loadbalancer1.{GUID}.{DOMAIN_INTERNAL}
+openshift_master_cluster_hostname=loadbalancer1.{GUID}.internal
 openshift_master_cluster_public_hostname=loadbalancer.{GUID}.{DOMAIN_EXTERNAL}
 openshift_master_default_subdomain=apps.{GUID}.{DOMAIN_EXTERNAL}
 openshift_master_overwrite_named_certificates=True
@@ -188,32 +188,32 @@ nodes
 nfs
 
 [lb]
-loadbalancer1.{GUID}.{DOMAIN_INTERNAL}
+loadbalancer1.{GUID}.internal
 
 [masters]
-master1.{GUID}.{DOMAIN_INTERNAL}
-master2.{GUID}.{DOMAIN_INTERNAL}
-master3.{GUID}.{DOMAIN_INTERNAL}
+master1.{GUID}.internal
+master2.{GUID}.internal
+master3.{GUID}.internal
 
 [etcd]
-master1.{GUID}.{DOMAIN_INTERNAL}
-master2.{GUID}.{DOMAIN_INTERNAL}
-master3.{GUID}.{DOMAIN_INTERNAL}
+master1.{GUID}.internal
+master2.{GUID}.internal
+master3.{GUID}.internal
 
 [nodes]
 ## These are the masters
-master1.{GUID}.{DOMAIN_INTERNAL} openshift_hostname=master1.{GUID}.{DOMAIN_INTERNAL}  openshift_node_labels="{'env': 'master', 'cluster': '{GUID}'}"
-master2.{GUID}.{DOMAIN_INTERNAL} openshift_hostname=master2.{GUID}.{DOMAIN_INTERNAL}  openshift_node_labels="{'env': 'master', 'cluster': '{GUID}'}"
-master3.{GUID}.{DOMAIN_INTERNAL} openshift_hostname=master3.{GUID}.{DOMAIN_INTERNAL}  openshift_node_labels="{'env': 'master', 'cluster': '{GUID}'}"
+master1.{GUID}.internal openshift_hostname=master1.{GUID}.internal  openshift_node_labels="{'env': 'master', 'cluster': '{GUID}'}"
+master2.{GUID}.internal openshift_hostname=master2.{GUID}.internal  openshift_node_labels="{'env': 'master', 'cluster': '{GUID}'}"
+master3.{GUID}.internal openshift_hostname=master3.{GUID}.internal  openshift_node_labels="{'env': 'master', 'cluster': '{GUID}'}"
 
 ## These are infranodes
-infranode1.{GUID}.{DOMAIN_INTERNAL} openshift_hostname=infranode1.{GUID}.{DOMAIN_INTERNAL}  openshift_node_labels="{'env':'infra', 'cluster': '{GUID}'}"
-infranode2.{GUID}.{DOMAIN_INTERNAL} openshift_hostname=infranode2.{GUID}.{DOMAIN_INTERNAL}  openshift_node_labels="{'env':'infra', 'cluster': '{GUID}'}"
+infranode1.{GUID}.internal openshift_hostname=infranode1.{GUID}.internal  openshift_node_labels="{'env':'infra', 'cluster': '{GUID}'}"
+infranode2.{GUID}.internal openshift_hostname=infranode2.{GUID}.internal  openshift_node_labels="{'env':'infra', 'cluster': '{GUID}'}"
 
 ## These are regular nodes
-node1.{GUID}.{DOMAIN_INTERNAL} openshift_hostname=node1.{GUID}.{DOMAIN_INTERNAL}  openshift_node_labels="{'env':'app', 'cluster': '{GUID}'}"
-node2.{GUID}.{DOMAIN_INTERNAL} openshift_hostname=node2.{GUID}.{DOMAIN_INTERNAL}  openshift_node_labels="{'env':'app', 'cluster': '{GUID}'}"
-node3.{GUID}.{DOMAIN_INTERNAL} openshift_hostname=node3.{GUID}.{DOMAIN_INTERNAL}  openshift_node_labels="{'env':'app', 'cluster': '{GUID}'}"
+node1.{GUID}.internal openshift_hostname=node1.{GUID}.internal  openshift_node_labels="{'env':'app', 'cluster': '{GUID}'}"
+node2.{GUID}.internal openshift_hostname=node2.{GUID}.internal  openshift_node_labels="{'env':'app', 'cluster': '{GUID}'}"
+node3.{GUID}.internal openshift_hostname=node3.{GUID}.internal  openshift_node_labels="{'env':'app', 'cluster': '{GUID}'}"
 
 [nfs]
-support1.{GUID}.{DOMAIN_INTERNAL} openshift_hostname=support1.{GUID}.{DOMAIN_INTERNAL}
+support1.{GUID}.internal openshift_hostname=support1.{GUID}.internal
