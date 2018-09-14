@@ -10,6 +10,7 @@ ansible_ssh_user=ec2-user
 ###########################################################################
 ### OpenShift Basic Vars
 ###########################################################################
+openshift_deployment_type=openshift-enterprise
 deployment_type=openshift-enterprise
 containerized=false
 
@@ -17,7 +18,7 @@ containerized=false
 openshift_disable_check="disk_availability,memory_availability,docker_image_availability"
 
 # default project node selector
-osm_default_node_selector='env=app'
+osm_default_node_selector='client=common'
 openshift_hosted_infra_selector="env=infra"
 
 ###########################################################################
@@ -76,7 +77,8 @@ openshift_hosted_registry_storage_volume_size=20Gi
 openshift_hosted_registry_pullthrough=true
 openshift_hosted_registry_acceptschema2=true
 openshift_hosted_registry_enforcequota=true
-
+openshift_hosted_router_selector="env=infra"
+openshift_hosted_registry_selector="env=infra"
 ###########################################################################
 ### OpenShift Service Catalog Vars
 ###########################################################################
