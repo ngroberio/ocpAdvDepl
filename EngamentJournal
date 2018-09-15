@@ -60,7 +60,7 @@ Ansible playbook file ansible_deployment_homework.yaml or the script install.sh 
 Engagement journal
 
 ++ Basic Requirements
-  User Amy can log in as administrator on the master console with r3dh4t1! as password.
+  User amy can log in as administrator on the master console with r3dh4t1! as password.
   Registry console URL is https://registry-console-default.apps.$GUID.example.opentlc.com.
   Master console URL is https://loadbalancer.$GUID.example.opentlc.com
   25 PVs with a size of 5 GB and ReadWriteOnce  access mode have been created.
@@ -106,8 +106,8 @@ Engagement journal
       ./config/infra/setup_cicd.sh
 
 ++ Multitenancy
-  Alpha Corp group have two users, Amy and Andrew
-  Beta Corp group have two users, Brian and Betty
+  Alpha Corp group have two users, amy and Andrew
+  Beta Corp group have two users, brian and betty
   Dedicated node for each Client:
     -> admissionControl plugin sets specific limits per label (client/customer)
 

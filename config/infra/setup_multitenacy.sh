@@ -2,8 +2,8 @@
 
 export GUID=`hostname | cut -d"." -f2`
 
-oc adm groups new alpha Amy Andrew
-oc adm groups new beta Brian Betty
+oc adm groups new alpha amy Andrew
+oc adm groups new beta brian betty
 
 for OCP_USERNAME in amy andrew brian betty; do
 

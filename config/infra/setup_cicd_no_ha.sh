@@ -1,11 +1,11 @@
 export GUID=`hostname | cut -d"." -f2`
 
-echo ">>> SETUP AMY CICD SIMPLE PIPELINE"
-oc login -u Amy -pr3dh4t1!
+echo ">>> SETUP amy CICD SIMPLE PIPELINE"
+oc login -u amy -pr3dh4t1!
 oc new-project os-tasks-${GUID}-dev
 oc new-project os-tasks-${GUID}-test
 oc new-project os-tasks-${GUID}-prod
-echo "<<< SETUP AMY CICD SIMPLE PIPELINE DONE"
+echo "<<< SETUP amy CICD SIMPLE PIPELINE DONE"
 
 echo ">>> SETUP JENKINS"
 #oc new-app jenkins-persistent -p ENABLE_OAUTH=true -e JENKINS_PASSWORD=jenkins -n os-tasks-${GUID}-dev
