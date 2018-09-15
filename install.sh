@@ -37,6 +37,7 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     echo "<<< COPY KUBE CONFIG DONE"
 
     echo ">>> CREATE USER GROUPS"
+    ./config/bin/addIdentityProvider.sh
     oc adm groups new alpha Amy Andrew
     oc adm groups new beta Brian Betty
     oc adm groups new common
