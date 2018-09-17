@@ -212,7 +212,7 @@ parameters:
 - description: The OpenShift Namespace where the Jenkins ImageStream resides.
   displayName: Jenkins ImageStream Namespace
   name: NAMESPACE
-  value: openshift
+  value: ${PROJECT_NAME}
 - description: The Namespace where the Jenkins pod resides.
   displayName: Project to deploy Jenkins
   name: CICD_NAMESPACE
