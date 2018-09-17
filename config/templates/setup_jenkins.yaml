@@ -22,7 +22,7 @@ metadata:
     tags: instant-app,jenkins
   creationTimestamp: 2018-08-15T17:08:20Z
   name: jenkins-persistent
-  namespace: openshift
+  namespace: ${NAMESPACE}
   resourceVersion: "41941"
   selfLink: /apis/template.openshift.io/v1/namespaces/openshift/templates/jenkins-persistent
   uid: cf9d1923-a0ad-11e8-b3c8-06e20353ae60
