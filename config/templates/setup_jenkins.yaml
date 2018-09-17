@@ -209,10 +209,7 @@ parameters:
   name: VOLUME_CAPACITY
   required: true
   value: 1Gi
-- description: The OpenShift Namespace where the Jenkins ImageStream resides.
-  displayName: Jenkins ImageStream Namespace
-  name: NAMESPACE
-  value: ${PROJECT_NAME}
+- name: PROJECT_NAME
 - description: The Namespace where the Jenkins pod resides.
   displayName: Project to deploy Jenkins
   name: CICD_NAMESPACE
