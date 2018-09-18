@@ -84,8 +84,8 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     ./config/infra/setup_cicd.sh os-tasks-${GUID}-dev
 
     echo ">>> SET UP MULTITENANCY"
-    oc login -u system:admin
-    ./config/infra/setup_multitenacy.sh
+    #oc login -u system:admin
+    #./config/infra/setup_multitenacy.sh
     echo "<<< SET UP MULTITENANCY DONE"
 
 else
