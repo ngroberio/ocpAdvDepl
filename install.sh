@@ -66,10 +66,10 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     echo "<<< FIX NFS PV RECYCLING DONE"
 
     echo ">>> SET UP DEDICATED NODES"
-    oc login -u system:admin
-    oc label node node1.${GUID}.internal client=alpha
-    oc label node node2.${GUID}.internal client=beta
-    oc label node node3.${GUID}.internal client=common
+    #oc login -u system:admin
+    #oc label node node1.${GUID}.internal client=alpha
+    #oc label node node2.${GUID}.internal client=beta
+    #oc label node node3.${GUID}.internal client=common
     echo "<<< SET UP DEDICATED NODES DONE"
 
     echo ">>> START NODEJS_MONGO_APP SMOKE TEST"
@@ -81,7 +81,7 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     echo "<<< SETUP AUTOSCALER DONE"
 
     echo ">>> SETUP AND RUN CICD SIMPLE PIPELINE"
-    ./config/infra/setup_cicd.sh
+    ./config/infra/setup_cicd.sh os-tasks-${GUID}-dev
 
     echo ">>> SET UP MULTITENANCY"
     oc login -u system:admin
