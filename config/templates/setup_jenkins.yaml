@@ -10,7 +10,6 @@ metadata:
   annotations:
     description: |-
       Jenkins service, with persistent storage.
-
       NOTE: You must have persistent volumes available in your cluster to use this template.
     iconClass: icon-jenkins
     openshift.io/display-name: Jenkins
@@ -106,9 +105,9 @@ objects:
             limits:
               memory: ${MEMORY_LIMIT}
               cpu: "1"
-            request:
+            requests:
               memory: 512Mi
-              cpu: 500m
+              cpu: "500m"
           securityContext:
             capabilities: {}
             privileged: false
