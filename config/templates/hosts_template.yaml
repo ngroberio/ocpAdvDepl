@@ -18,7 +18,7 @@ containerized=false
 openshift_disable_check="memory_availability"
 
 # default project node selector
-osm_default_node_selector='client=common'
+osm_default_node_selector='env=app'
 openshift_hosted_infra_selector="env=infra"
 
 ###########################################################################
@@ -213,9 +213,9 @@ infranode1.{GUID}.internal openshift_hostname=infranode1.{GUID}.internal  opensh
 infranode2.{GUID}.internal openshift_hostname=infranode2.{GUID}.internal  openshift_node_labels="{'env':'infra', 'cluster': '{GUID}'}"
 
 ## These are regular nodes
-node1.{GUID}.internal openshift_hostname=node1.{GUID}.internal  openshift_node_labels="{'client':'common', 'cluster': '{GUID}'}"
-node2.{GUID}.internal openshift_hostname=node2.{GUID}.internal  openshift_node_labels="{'client':'common', 'cluster': '{GUID}'}"
-node3.{GUID}.internal openshift_hostname=node3.{GUID}.internal  openshift_node_labels="{'client':'common', 'cluster': '{GUID}'}"
+node1.{GUID}.internal openshift_hostname=node1.{GUID}.internal  openshift_node_labels="{'env':'app', 'cluster': '{GUID}'}"
+node2.{GUID}.internal openshift_hostname=node2.{GUID}.internal  openshift_node_labels="{'env':'app', 'cluster': '{GUID}'}"
+node3.{GUID}.internal openshift_hostname=node3.{GUID}.internal  openshift_node_labels="{'env':'app', 'cluster': '{GUID}'}"
 
 [nfs]
 support1.{GUID}.internal openshift_hostname=support1.{GUID}.internal
