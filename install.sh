@@ -38,7 +38,7 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
 
     echo ">>> CREATE USER GROUPS"
     ./config/bin/addIdentityProvider.sh
-    oc adm groups new alpha amy Andrew
+    oc adm groups new alpha amy andrew
     oc adm groups new beta brian betty
     oc adm groups new common
     oc adm policy add-cluster-role-to-user cluster-admin user1
