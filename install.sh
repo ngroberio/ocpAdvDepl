@@ -41,7 +41,7 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     oc adm groups new alpha amy andrew
     oc adm groups new beta brian betty
     oc adm groups new common
-    oc adm policy add-cluster-role-to-user cluster-admin user1
+    #oc adm policy add-cluster-role-to-user cluster-admin user1
 
     echo "<<< CREATE USER GROUPS DONE"
 

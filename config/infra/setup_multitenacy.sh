@@ -20,6 +20,7 @@ oc create clusterquota clusterquota-$OCP_USERNAME \
 
 done
 
+
 pwd=`pwd`
 export pwd=$pwd/config/templates/multi_template.yaml
 echo ">>> CREATE TEMPLATE FROM ${pwd}"
