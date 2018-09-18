@@ -105,6 +105,10 @@ objects:
           resources:
             limits:
               memory: ${MEMORY_LIMIT}
+              cpu: "1"
+            request:
+              memory: 512Mi
+              cpu: 500m
           securityContext:
             capabilities: {}
             privileged: false
