@@ -36,7 +36,6 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     ansible masters[0] -b -m fetch -a "src=/root/.kube/config dest=/root/.kube/config flat=yes"
     echo "<<< COPY KUBE CONFIG DONE"
 
-
     echo ">>> CREATE NFS STORAGE"
     ./config/infra/pvs/create_pvs.sh
     ./config/infra/pvs/create_pvs_5gigs.sh
@@ -44,16 +43,16 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     cat /root/pvs/* | oc create -f -
     echo "<<< CREATE NFS STORAGE DONE"
 
-    echo ">>> CREATE USER GROUPS"
-    ./config/bin/addIdentityProvider.sh
-    oc adm groups new alpha amy andrew
-    oc adm groups new beta brian betty
-    oc adm groups new common
-    echo "<<< CREATE USER GROUPS DONE"
-
     echo ">>> ADD CLUSTER ADMIN"
     ./config/bin/addClusterAdmin.sh
     echo ">>> ADD CLUSTER ADMIN DONE"
+
+    echo ">>> CREATE USER GROUPS"
+    ./config/bin/addIdentityProvider.sh
+    oc adm groups new alpha amy andrew admin
+    oc adm groups new beta brian betty admin
+    oc adm groups new common
+    echo "<<< CREATE USER GROUPS DONE"
 
     echo ">>> FIX NFS PV RECYCLING"
       echo "PULL OSE RECYCLER IMAGE"
@@ -66,7 +65,6 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     echo ">>> START NODEJS_MONGO_APP SMOKE TEST"
     ./config/bin/nodejs_mongo_smoke_test.sh
     echo "<<< START NODEJS_MONGO_APP SMOKE TEST DONE"
-
 
     echo ">>> SET UP DEDICATED NODES"
     #oc login -u system:admin
