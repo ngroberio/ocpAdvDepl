@@ -36,13 +36,15 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     ansible masters[0] -b -m fetch -a "src=/root/.kube/config dest=/root/.kube/config flat=yes"
     echo "<<< COPY KUBE CONFIG DONE"
 
+    echo ">>> ADD CLUSTER ADMIN"
+    ./config/bin/addClusterAdmin.sh
+    echo ">>> ADD CLUSTER ADMIN"
+
     echo ">>> CREATE USER GROUPS"
     ./config/bin/addIdentityProvider.sh
     oc adm groups new alpha amy andrew
     oc adm groups new beta brian betty
     oc adm groups new common
-    #oc adm policy add-cluster-role-to-user cluster-admin user1
-
     echo "<<< CREATE USER GROUPS DONE"
 
     echo ">>> CREATE NFS STORAGE"
