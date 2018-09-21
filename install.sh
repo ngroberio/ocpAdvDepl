@@ -36,9 +36,13 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     ansible masters[0] -b -m fetch -a "src=/root/.kube/config dest=/root/.kube/config flat=yes"
     echo "<<< COPY KUBE CONFIG DONE"
 
-    echo ">>> ADD CLUSTER ADMIN"
-    ./config/bin/addClusterAdmin.sh
-    echo ">>> ADD CLUSTER ADMIN"
+
+    echo ">>> CREATE NFS STORAGE"
+    ./config/infra/pvs/create_pvs.sh
+    ./config/infra/pvs/create_pvs_5gigs.sh
+    ./config/infra/pvs/create_pvs_10Gigs.sh
+    cat /root/pvs/* | oc create -f -
+    echo "<<< CREATE NFS STORAGE DONE"
 
     echo ">>> CREATE USER GROUPS"
     ./config/bin/addIdentityProvider.sh
@@ -47,25 +51,22 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     oc adm groups new common
     echo "<<< CREATE USER GROUPS DONE"
 
-    echo ">>> CREATE NFS STORAGE"
-    #ssh support1.${GUID}.internal "bash -s" -- < ./config/infra/pvs/create_pvs.sh
-    ./config/infra/pvs/create_pvs.sh
-    ./config/infra/pvs/create_pvs_5gigs.sh
-    ./config/infra/pvs/create_pvs_10Gigs.sh
-
-    cat /root/pvs/* | oc create -f -
-
-    echo "<<< CREATE NFS STORAGE DONE"
+    echo ">>> ADD CLUSTER ADMIN"
+    ./config/bin/addClusterAdmin.sh
+    echo ">>> ADD CLUSTER ADMIN DONE"
 
     echo ">>> FIX NFS PV RECYCLING"
+      echo "PULL OSE RECYCLER IMAGE"
+      ansible nodes -i ./hosts -m shell -a "docker pull registry.access.redhat.com/openshift3/ose-recycler:latest"
 
-    echo "PULL OSE RECYCLER IMAGE"
-    ansible nodes -i ./hosts -m shell -a "docker pull registry.access.redhat.com/openshift3/ose-recycler:latest"
-
-    echo "TAG OS RECYCLER IMAGE"
-    ansible nodes -i ./hosts -m shell -a "docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.9.30"
-
+      echo "TAG OS RECYCLER IMAGE"
+      ansible nodes -i ./hosts -m shell -a "docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.9.30"
     echo "<<< FIX NFS PV RECYCLING DONE"
+
+    echo ">>> START NODEJS_MONGO_APP SMOKE TEST"
+    ./config/bin/nodejs_mongo_smoke_test.sh
+    echo "<<< START NODEJS_MONGO_APP SMOKE TEST DONE"
+
 
     echo ">>> SET UP DEDICATED NODES"
     #oc login -u system:admin
@@ -73,10 +74,6 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     #oc label node node2.${GUID}.internal client=beta
     #oc label node node3.${GUID}.internal client=common
     echo "<<< SET UP DEDICATED NODES DONE"
-
-    echo ">>> START NODEJS_MONGO_APP SMOKE TEST"
-    ./config/bin/nodejs_mongo_smoke_test.sh
-    echo "<<< START NODEJS_MONGO_APP SMOKE TEST DONE"
 
     echo ">>> SETUP HA UTOSCALER"
     oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=80 -n os-tasks-${GUID}-prod
