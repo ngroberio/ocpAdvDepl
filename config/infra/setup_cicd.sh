@@ -10,21 +10,25 @@ oc new-project cicd-prod
 echo "<<< SETUP CICD PROJECTS DONE"
 
 echo ">>> SETUP JENKINS"
-#oc new-app jenkins-persistent -p ENABLE_OAUTH=true -e JENKINS_PASSWORD=jenkins -n cicd-dev
+#oc new-app jenkins-persistent -p ENABLE_OAUTH=true -e JENKINS_PASSWORD=jenkins -n cicd
 oc create -f ./config/templates/setup_jenkins.yaml -n cicd
-#oc new-app -f ./config/templates/setup_jenkins.yaml -e OPENSHIFT_ENABLE_OAUTH=true -e JENKINS_PASSWORD=jenkins -n cicd-dev
+#oc new-app -f ./config/templates/setup_jenkins.yaml -e OPENSHIFT_ENABLE_OAUTH=true -e JENKINS_PASSWORD=jenkins -n cicd
 
 echo ">>>>> ADD JENKINS USER PERMISSIONS TO SERVICEACCOUNT"
+oc policy add-role-to-user edit system:serviceaccount:cicd-dev:jenkins -n cicd
 oc policy add-role-to-user edit system:serviceaccount:cicd-dev:jenkins -n cicd-dev
 oc policy add-role-to-user edit system:serviceaccount:cicd-dev:jenkins -n cicd-test
 oc policy add-role-to-user edit system:serviceaccount:cicd-dev:jenkins -n cicd-prod
 
+oc policy add-role-to-user edit system:serviceaccount:cicd-dev:default -n cicd
 oc policy add-role-to-user edit system:serviceaccount:cicd-dev:default -n cicd-dev
 oc policy add-role-to-user edit system:serviceaccount:cicd-dev:default -n cicd-test
 oc policy add-role-to-user edit system:serviceaccount:cicd-dev:default -n cicd-prod
 
-oc policy add-role-to-group system:image-puller system:serviceaccounts:cicd-test -n cicd-dev
-oc policy add-role-to-group system:image-puller system:serviceaccounts:cicd-prod -n cicd-dev
+oc policy add-role-to-group system:image-puller system:serviceaccounts:cicd-dev -n cicd
+oc policy add-role-to-group system:image-puller system:serviceaccounts:cicd-test -n cicd
+oc policy add-role-to-group system:image-puller system:serviceaccounts:cicd-prod -n cicd
+
 echo "<<< SETUP JENKINS DONE"
 
 echo ">>> SETUP OPENSHIFT TO RUN PIPELINE"
@@ -37,12 +41,12 @@ oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=80 -n cicd-prod
 echo "<<< SETUP AUTOSCALER DONE"
 
 cat ./config/templates/os_pipeline_template.yaml | sed -e "s:{GUID}:$GUID:g" > ./os-pipeline.yaml
-oc create -f ./os-pipeline.yaml -n cicd-dev
+oc create -f ./os-pipeline.yaml -n cicd
 echo "<<< SETUP OPENSHIFT TO RUN PIPELINE DONE"
 
 echo ">>> JENKINS LIVENESS CHECK"
-./config/bin/podLivenessCheck.sh jenkins cicd-dev 15
+./config/bin/podLivenessCheck.sh jenkins cicd 15
 
 echo ">>> RUN PIPELINE"
-oc start-build os-pipeline -n cicd-dev
+oc start-build os-pipeline -n cicd
 echo "<<< RUN PIPELINE DONE"
