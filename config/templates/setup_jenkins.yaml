@@ -129,8 +129,8 @@ objects:
         - jenkins
         from:
           kind: ImageStreamTag
-          name: ${JENKINS_IMAGE_STREAM_TAG}
-          namespace: ${PROJECT_NAME}
+          name: jenkins:latest
+          namespace: openshift
         lastTriggeredImage: ""
       type: ImageChange
     - type: ConfigChange
