@@ -15,16 +15,27 @@ oc create -f ./config/templates/setup_jenkins.yaml -n cicd
 #oc new-app -f ./config/templates/setup_jenkins.yaml -e OPENSHIFT_ENABLE_OAUTH=true -e JENKINS_PASSWORD=jenkins -n cicd
 
 echo ">>>>> ADD JENKINS USER PERMISSIONS TO SERVICEACCOUNT"
+oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n cicd
+oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n cicd-dev
+oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n cicd-test
+oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n cicd-prod
+
 oc policy add-role-to-user edit system:serviceaccount:cicd-dev:jenkins -n cicd
 oc policy add-role-to-user edit system:serviceaccount:cicd-dev:jenkins -n cicd-dev
 oc policy add-role-to-user edit system:serviceaccount:cicd-dev:jenkins -n cicd-test
 oc policy add-role-to-user edit system:serviceaccount:cicd-dev:jenkins -n cicd-prod
 
-oc policy add-role-to-user edit system:serviceaccount:cicd-dev:default -n cicd
-oc policy add-role-to-user edit system:serviceaccount:cicd-dev:default -n cicd-dev
-oc policy add-role-to-user edit system:serviceaccount:cicd-dev:default -n cicd-test
-oc policy add-role-to-user edit system:serviceaccount:cicd-dev:default -n cicd-prod
+oc policy add-role-to-user edit system:serviceaccount:cicd-test:default -n cicd
+oc policy add-role-to-user edit system:serviceaccount:cicd-test:default -n cicd-dev
+oc policy add-role-to-user edit system:serviceaccount:cicd-test:default -n cicd-test
+oc policy add-role-to-user edit system:serviceaccount:cicd-test:default -n cicd-prod
 
+oc policy add-role-to-user edit system:serviceaccount:cicd-prod:default -n cicd
+oc policy add-role-to-user edit system:serviceaccount:cicd-prod:default -n cicd-dev
+oc policy add-role-to-user edit system:serviceaccount:cicd-prod:default -n cicd-test
+oc policy add-role-to-user edit system:serviceaccount:cicd-prod:default -n cicd-prod
+
+oc policy add-role-to-group system:image-puller system:serviceaccounts:cicd -n cicd
 oc policy add-role-to-group system:image-puller system:serviceaccounts:cicd-dev -n cicd
 oc policy add-role-to-group system:image-puller system:serviceaccounts:cicd-test -n cicd
 oc policy add-role-to-group system:image-puller system:serviceaccounts:cicd-prod -n cicd
@@ -37,7 +48,7 @@ oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param 
 oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param SOURCE_REPOSITORY_URL=https://github.com/OpenShiftDemos/openshift-tasks.git --param SOURCE_REPOSITORY_REF=master --param CONTEXT_DIR=/ -n cicd-prod
 
 echo ">>> SETUP HA UTOSCALER"
-oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=80 -n cicd-prod
+oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=90 -n cicd-prod
 echo "<<< SETUP AUTOSCALER DONE"
 
 cat ./config/templates/os_pipeline_template.yaml | sed -e "s:{GUID}:$GUID:g" > ./os-pipeline.yaml

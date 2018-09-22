@@ -74,11 +74,11 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     echo "<<< SET UP DEDICATED NODES DONE"
 
     echo ">>> SETUP HA UTOSCALER"
-    oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=80 -n os-tasks-${GUID}-prod
+    oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=90 -n cicd-prod
     echo "<<< SETUP AUTOSCALER DONE"
 
     echo ">>> SETUP AND RUN CICD SIMPLE PIPELINE"
-    ./config/infra/setup_cicd.sh os-tasks-${GUID}-dev
+    ./config/infra/setup_cicd.sh cicd
 
     echo ">>> SET UP MULTITENANCY<<<"
     #oc login -u system:admin
