@@ -47,7 +47,7 @@ objects:
     namespace: ${CICD_NAMESPACE}
   spec:
     accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
     resources:
       requests:
         storage: ${VOLUME_CAPACITY}
@@ -210,7 +210,7 @@ parameters:
   displayName: Volume Capacity
   name: VOLUME_CAPACITY
   required: true
-  value: 7Gi
+  value: 2Gi
 - name: PROJECT_NAME
   value: os-tasks-bcc4-dev
 - description: The Namespace where the Jenkins pod resides.
