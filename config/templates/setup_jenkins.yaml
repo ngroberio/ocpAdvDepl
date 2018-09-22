@@ -53,7 +53,7 @@ objects:
     nfs:
       path: /tmp
       server: support1.${GUID}.internal
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Retain
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
