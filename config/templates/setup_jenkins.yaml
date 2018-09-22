@@ -47,7 +47,7 @@ objects:
     namespace: ${CICD_NAMESPACE}
   spec:
     accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
     resources:
       requests:
         storage: ${VOLUME_CAPACITY}
