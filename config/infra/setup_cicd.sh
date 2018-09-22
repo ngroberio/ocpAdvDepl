@@ -10,9 +10,9 @@ oc new-project cicd-prod
 echo "<<< SETUP CICD PROJECTS DONE"
 
 echo ">>> SETUP JENKINS"
-#oc new-app jenkins-persistent -p ENABLE_OAUTH=true -e JENKINS_PASSWORD=jenkins -n cicd
-oc create -f ./config/templates/setup_jenkins.yaml -n cicd
-oc new-app --template=jenkins-persistent -n cicd
+oc new-app jenkins-persistent -p ENABLE_OAUTH=true -e JENKINS_PASSWORD=jenkins -n cicd
+#oc create -f ./config/templates/setup_jenkins.yaml -n cicd
+#oc new-app --template=jenkins-persistent -n cicd
 #oc new-app -f ./config/templates/setup_jenkins.yaml -e OPENSHIFT_ENABLE_OAUTH=true -e JENKINS_PASSWORD=jenkins -n cicd
 
 echo ">>>>> ADD JENKINS USER PERMISSIONS TO SERVICEACCOUNT"
