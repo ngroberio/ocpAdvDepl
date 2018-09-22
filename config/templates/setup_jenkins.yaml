@@ -43,7 +43,7 @@ objects:
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
-    name: ${JENKINS_SERVICE_NAME}
+    name: ${JENKINS_SERVICE_NAME}-pvc
   spec:
     accessModes:
     - ReadWriteOnce
@@ -124,7 +124,7 @@ objects:
         volumes:
         - name: ${JENKINS_SERVICE_NAME}-data
           persistentVolumeClaim:
-            claimName: ${JENKINS_SERVICE_NAME}
+            claimName: ${JENKINS_SERVICE_NAME}-pvc
     triggers:
     - imageChangeParams:
         automatic: true
