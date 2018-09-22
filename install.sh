@@ -43,6 +43,14 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     cat /root/pvs/* | oc create -f -
     echo "<<< CREATE NFS STORAGE DONE"
 
+    echo ">>> FIX NFS PV RECYCLING"
+      echo "PULL OSE RECYCLER IMAGE"
+      ansible nodes -i ./hosts -m shell -a "docker pull registry.access.redhat.com/openshift3/ose-recycler:latest"
+
+      echo "TAG OS RECYCLER IMAGE"
+      ansible nodes -i ./hosts -m shell -a "docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.9.30"
+    echo "<<< FIX NFS PV RECYCLING DONE"
+
     echo ">>> ADD CLUSTER ADMIN"
     ./config/bin/addClusterAdmin.sh
     echo ">>> ADD CLUSTER ADMIN DONE"
@@ -53,14 +61,6 @@ if ansible-playbook -f 20 -i ./hosts /usr/share/ansible/openshift-ansible/playbo
     oc adm groups new beta brian betty admin
     oc adm groups new common
     echo "<<< CREATE USER GROUPS DONE"
-
-    echo ">>> FIX NFS PV RECYCLING"
-      echo "PULL OSE RECYCLER IMAGE"
-      ansible nodes -i ./hosts -m shell -a "docker pull registry.access.redhat.com/openshift3/ose-recycler:latest"
-
-      echo "TAG OS RECYCLER IMAGE"
-      ansible nodes -i ./hosts -m shell -a "docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.9.30"
-    echo "<<< FIX NFS PV RECYCLING DONE"
 
     echo ">>> START NODEJS_MONGO_APP SMOKE TEST"
     ./config/bin/nodejs_mongo_smoke_test.sh
