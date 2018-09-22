@@ -50,6 +50,10 @@ objects:
     resources:
       requests:
         storage: ${VOLUME_CAPACITY}
+    nfs:
+      path: /tmp
+      server: support1.${GUID}.internal
+    persistentVolumeReclaimPolicy: Recycle
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
