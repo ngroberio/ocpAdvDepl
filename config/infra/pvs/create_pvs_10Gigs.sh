@@ -4,7 +4,7 @@ set ff=unix
 export GUID=`hostname|awk -F. '{print $2}'`
 export volsize="10Gi"
 for volume in pv{26..50} ; do
-cat << EOF > /root/pvs/pv${volume}
+cat << EOF > /root/pvs/${volume}
 {
   "apiVersion": "v1",
   "kind": "PersistentVolume",
@@ -17,7 +17,7 @@ cat << EOF > /root/pvs/pv${volume}
     },
     "accessModes": [ "ReadWriteMany" ],
     "nfs": {
-        "path": "/srv/nfs/user-vols/pv${volume}",
+        "path": "/srv/nfs/user-vols/${volume}",
         "server": "support1.${GUID}.internal"
     },
     "persistentVolumeReclaimPolicy": "Retain"

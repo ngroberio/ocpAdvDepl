@@ -5,7 +5,7 @@ export GUID=`hostname|awk -F. '{print $2}'`
 export volsize="5Gi"
 mkdir /root/pvs
 for volume in pv{1..25} ; do
-cat << EOF > /root/pvs/pv${volume}
+cat << EOF > /root/pvs/${volume}
 {
   "apiVersion": "v1",
   "kind": "PersistentVolume",
@@ -18,12 +18,12 @@ cat << EOF > /root/pvs/pv${volume}
     },
     "accessModes": [ "ReadWriteOnce" ],
     "nfs": {
-        "path": "/srv/nfs/user-vols/pv${volume}",
+        "path": "/srv/nfs/user-vols/${volume}",
         "server": "support1.${GUID}.internal"
     },
     "persistentVolumeReclaimPolicy": "Recycle"
   }
 }
 EOF
-echo "Created def file for pv${volume}";
+echo "Created def file for ${volume}";
 done;
