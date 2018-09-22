@@ -44,7 +44,6 @@ objects:
   kind: PersistentVolumeClaim
   metadata:
     name: ${JENKINS_SERVICE_NAME}
-    namespace: ${CICD_NAMESPACE}
   spec:
     accessModes:
     - ReadWriteOnce
