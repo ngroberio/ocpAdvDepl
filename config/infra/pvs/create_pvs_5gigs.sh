@@ -21,7 +21,7 @@ cat << EOF > /root/pvs/${volume}
         "path": "/srv/nfs/user-vols/${volume}",
         "server": "support1.${GUID}.internal"
     },
-    "persistentVolumeReclaimPolicy": "Recycle"
+    "persistentVolumeReclaimPolicy": "Retain"
   }
 }
 EOF
