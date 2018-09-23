@@ -2,7 +2,7 @@ export GUID=`hostname | cut -d"." -f2`
 
 echo ">>> SETUP CICD PROJECTS"
 #oc login -u amy -pr3dh4t1!
-oc login -u system:admin
+#oc login -u system:admin
 oc new-project cicd
 oc new-project cicd-dev
 oc new-project cicd-test
