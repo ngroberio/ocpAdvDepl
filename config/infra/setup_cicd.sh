@@ -16,10 +16,10 @@ oc new-app jenkins-persistent -p ENABLE_OAUTH=true -e JENKINS_PASSWORD=jenkins -
 #oc new-app -f ./config/templates/setup_jenkins.yaml -e OPENSHIFT_ENABLE_OAUTH=true -e JENKINS_PASSWORD=jenkins -n cicd
 
 echo ">>>>> ADD JENKINS USER PERMISSIONS TO SERVICEACCOUNT"
-oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n cicd
-oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n cicd-dev
-oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n cicd-test
-oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n cicd-prod
+oc policy add-role-to-user edit system:serviceaccount:jenkins -n cicd
+oc policy add-role-to-user edit system:serviceaccount:jenkins -n cicd-dev
+oc policy add-role-to-user edit system:serviceaccount:jenkins -n cicd-test
+oc policy add-role-to-user edit system:serviceaccount:jenkins -n cicd-prod
 
 oc policy add-role-to-user edit system:serviceaccount:cicd-dev:jenkins -n cicd
 oc policy add-role-to-user edit system:serviceaccount:cicd-dev:jenkins -n cicd-dev
