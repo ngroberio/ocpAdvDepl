@@ -24,7 +24,6 @@ items:
                  echo "BUILD DONE"
 
             stage ("DEPLOY AND VERIFY IN DEV ENV")
-
                  echo "START DEV DEPLOY"
                  openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: '', verbose: 'false', waitTime: ''
                  openshiftVerifyDeployment apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: '', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
@@ -45,7 +44,6 @@ items:
                  echo "START TEST SERVICE CHECK DONE"
 
             stage ("PROMOTE AND VERIFY IN PROD ENV")
-
                  echo "START DEPLOY TO PROD"
                  openshiftDeploy apiURL: 'https://openshift.default.svc.cluster.local', authToken: '', depCfg: 'os-tasks', namespace: 'cicd-prod', verbose: 'false', waitTime: ''
                  echo "DEPLOY TO PROD DONE"
