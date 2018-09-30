@@ -53,7 +53,7 @@ oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=90 -n cicd-prod
 echo "<<< SETUP AUTOSCALER DONE"
 
 cat ./config/templates/os_pipeline_template.yaml | sed -e "s:{GUID}:$GUID:g" > ./os-pipeline.yaml
-oc create -f ./os-pipeline.yaml -n cicd
+oc create -f ./os-pipeline.yaml -n cicd-dev
 echo "<<< SETUP OPENSHIFT TO RUN PIPELINE DONE"
 
 echo ">>> JENKINS LIVENESS CHECK"
