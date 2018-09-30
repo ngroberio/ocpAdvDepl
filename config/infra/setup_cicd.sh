@@ -21,25 +21,15 @@ oc policy add-role-to-user edit system:serviceaccount:jenkins -n cicd-dev
 oc policy add-role-to-user edit system:serviceaccount:jenkins -n cicd-test
 oc policy add-role-to-user edit system:serviceaccount:jenkins -n cicd-prod
 
-oc policy add-role-to-user edit system:serviceaccount:cicd-dev:jenkins -n cicd
-oc policy add-role-to-user edit system:serviceaccount:cicd-dev:jenkins -n cicd-dev
-oc policy add-role-to-user edit system:serviceaccount:cicd-dev:jenkins -n cicd-test
-oc policy add-role-to-user edit system:serviceaccount:cicd-dev:jenkins -n cicd-prod
-
-oc policy add-role-to-user edit system:serviceaccount:cicd-test:default -n cicd
-oc policy add-role-to-user edit system:serviceaccount:cicd-test:default -n cicd-dev
-oc policy add-role-to-user edit system:serviceaccount:cicd-test:default -n cicd-test
-oc policy add-role-to-user edit system:serviceaccount:cicd-test:default -n cicd-prod
-
-oc policy add-role-to-user edit system:serviceaccount:cicd-prod:default -n cicd
-oc policy add-role-to-user edit system:serviceaccount:cicd-prod:default -n cicd-dev
-oc policy add-role-to-user edit system:serviceaccount:cicd-prod:default -n cicd-test
-oc policy add-role-to-user edit system:serviceaccount:cicd-prod:default -n cicd-prod
+oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n cicd
+oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n cicd-dev
+oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n cicd-test
+oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n cicd-prod
 
 oc policy add-role-to-group system:image-puller system:serviceaccounts:cicd -n cicd
-oc policy add-role-to-group system:image-puller system:serviceaccounts:cicd-dev -n cicd
-oc policy add-role-to-group system:image-puller system:serviceaccounts:cicd-test -n cicd
-oc policy add-role-to-group system:image-puller system:serviceaccounts:cicd-prod -n cicd
+oc policy add-role-to-group system:image-puller system:serviceaccounts:cicd -n cicd-dev
+oc policy add-role-to-group system:image-puller system:serviceaccounts:cicd -n cicd-test
+oc policy add-role-to-group system:image-puller system:serviceaccounts:cicd -n cicd-prod
 
 echo "<<< SETUP JENKINS DONE"
 
