@@ -44,6 +44,7 @@ oc policy add-role-to-group system:image-puller system:serviceaccounts:cicd-prod
 echo "<<< SETUP JENKINS DONE"
 
 echo ">>> SETUP OPENSHIFT TO RUN PIPELINE"
+oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param SOURCE_REPOSITORY_URL=https://github.com/OpenShiftDemos/openshift-tasks.git --param SOURCE_REPOSITORY_REF=master --param CONTEXT_DIR=/ -n cicd
 oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param SOURCE_REPOSITORY_URL=https://github.com/OpenShiftDemos/openshift-tasks.git --param SOURCE_REPOSITORY_REF=master --param CONTEXT_DIR=/ -n cicd-dev
 oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param SOURCE_REPOSITORY_URL=https://github.com/OpenShiftDemos/openshift-tasks.git --param SOURCE_REPOSITORY_REF=master --param CONTEXT_DIR=/ -n cicd-test
 oc new-app --template=eap70-basic-s2i --param APPLICATION_NAME=os-tasks --param SOURCE_REPOSITORY_URL=https://github.com/OpenShiftDemos/openshift-tasks.git --param SOURCE_REPOSITORY_REF=master --param CONTEXT_DIR=/ -n cicd-prod
@@ -53,12 +54,12 @@ oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=90 -n cicd-prod
 echo "<<< SETUP AUTOSCALER DONE"
 
 cat ./config/templates/os_pipeline_template.yaml | sed -e "s:{GUID}:$GUID:g" > ./os-pipeline.yaml
-oc create -f ./os-pipeline.yaml -n cicd-dev
+oc create -f ./os-pipeline.yaml -n cicd
 echo "<<< SETUP OPENSHIFT TO RUN PIPELINE DONE"
 
 echo ">>> JENKINS LIVENESS CHECK"
 ./config/bin/podLivenessCheck.sh jenkins cicd 15
 
 echo ">>> RUN PIPELINE"
-oc start-build os-pipeline -n cicd-dev
+oc start-build os-pipeline -n cicd
 echo "<<< RUN PIPELINE DONE"
