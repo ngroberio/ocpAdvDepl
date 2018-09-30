@@ -60,5 +60,5 @@ echo ">>> JENKINS LIVENESS CHECK"
 ./config/bin/podLivenessCheck.sh jenkins cicd 15
 
 echo ">>> RUN PIPELINE"
-oc start-build os-pipeline -n cicd
+oc start-build os-pipeline -n cicd-dev
 echo "<<< RUN PIPELINE DONE"
