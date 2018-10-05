@@ -14,7 +14,7 @@ deployment_type=openshift-enterprise
 containerized=false
 
 # disable memory disk check, as we are not a production environment
-openshift_disable_check="disk_availability,memory_availability,docker_image_availability"
+openshift_disable_check="disk_availability,memory_availability,docker_image_availability,docker_storage"
 
 # default project node selector
 osm_default_node_selector='client=common'
@@ -200,18 +200,18 @@ master3.{GUID}.{DOMAIN_INTERNAL}
 
 [nodes]
 ## These are the masters
-master1.{GUID}.{DOMAIN_INTERNAL} openshift_hostname=master1.{GUID}.{DOMAIN_INTERNAL}  openshift_node_labels="{'env': 'master', 'cluster': '{GUID}'}"
-master2.{GUID}.{DOMAIN_INTERNAL} openshift_hostname=master2.{GUID}.{DOMAIN_INTERNAL}  openshift_node_labels="{'env': 'master', 'cluster': '{GUID}'}"
-master3.{GUID}.{DOMAIN_INTERNAL} openshift_hostname=master3.{GUID}.{DOMAIN_INTERNAL}  openshift_node_labels="{'env': 'master', 'cluster': '{GUID}'}"
+master1.{GUID}.internal openshift_hostname=master1.{GUID}.internal  openshift_node_labels="{'env': 'master', 'cluster': '{GUID}'}"
+master2.{GUID}.internal openshift_hostname=master2.{GUID}.internal  openshift_node_labels="{'env': 'master', 'cluster': '{GUID}'}"
+master3.{GUID}.internal openshift_hostname=master3.{GUID}.internal  openshift_node_labels="{'env': 'master', 'cluster': '{GUID}'}"
 
 ## These are infranodes
-infranode1.{GUID}.{DOMAIN_INTERNAL} openshift_hostname=infranode1.{GUID}.{DOMAIN_INTERNAL}  openshift_node_labels="{'env':'infra', 'cluster': '{GUID}'}"
-infranode2.{GUID}.{DOMAIN_INTERNAL} openshift_hostname=infranode2.{GUID}.{DOMAIN_INTERNAL}  openshift_node_labels="{'env':'infra', 'cluster': '{GUID}'}"
+infranode1.{GUID}.internal openshift_hostname=infranode1.{GUID}.internal  openshift_node_labels="{'env':'infra', 'cluster': '{GUID}'}"
+infranode2.{GUID}.internal openshift_hostname=infranode2.{GUID}.internal  openshift_node_labels="{'env':'infra', 'cluster': '{GUID}'}"
 
 ## These are regular nodes
-node1.{GUID}.{DOMAIN_INTERNAL} openshift_hostname=node1.{GUID}.{DOMAIN_INTERNAL}  openshift_node_labels="{'client':'alpha', 'cluster': '{GUID}'}"
-node2.{GUID}.{DOMAIN_INTERNAL} openshift_hostname=node2.{GUID}.{DOMAIN_INTERNAL}  openshift_node_labels="{'client':'beta', 'cluster': '{GUID}'}"
-node3.{GUID}.{DOMAIN_INTERNAL} openshift_hostname=node3.{GUID}.{DOMAIN_INTERNAL}  openshift_node_labels="{'client':'common', 'cluster': '{GUID}'}"
+node1.{GUID}.internal openshift_hostname=node1.{GUID}.internal  openshift_node_labels="{'client':'alpha', 'cluster': '{GUID}'}"
+node2.{GUID}.internal openshift_hostname=node2.{GUID}.internal  openshift_node_labels="{'client':'beta', 'cluster': '{GUID}'}"
+node3.{GUID}.internal openshift_hostname=node3.{GUID}.internal  openshift_node_labels="{'client':'common', 'cluster': '{GUID}'}"
 
 [nfs]
-support1.{GUID}.{DOMAIN_INTERNAL} openshift_hostname=support1.{GUID}.{DOMAIN_INTERNAL}
+support1.{GUID}.internal openshift_hostname=support1.{GUID}.internal
