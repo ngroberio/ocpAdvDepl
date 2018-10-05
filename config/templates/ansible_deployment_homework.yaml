@@ -53,8 +53,8 @@
   tasks:
     - name: make sure you are system:dmin
       shell: oc whoami | grep system:admin
-    - name: grant user1 to administrator privilege
-      shell: oc adm policy add-cluster-role-to-user cluster-admin user1
+    - name: grant admin to administrator privilege
+      shell: oc adm policy add-cluster-role-to-user cluster-admin admin
 
 - name: CREATE PVS USERS
   hosts: nfs
@@ -98,7 +98,7 @@
   hosts: localhost
   tasks:
     - name: CI CD workflow
-      script:  /root/ocpAdvDepl/config/infra/setup_cicd_no_ha.sh
+      script:  /root/ocpAdvDepl/config/infra/setup_cicd_no_ha.sh cicd
 
 - name: HPA CONFIG ON PROD
   hosts: localhost
