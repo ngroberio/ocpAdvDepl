@@ -106,8 +106,12 @@
     - name: HPA configuration
       shell: oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=80 -n os-tasks-${GUID}-prod
 
-- name: MULTITENANCY SETUP
-  hosts: localhost
-  tasks:
-    - name: MULTITENANCY SETUP
-      script:  /root/ocpAdvDepl/config/infra/setup_multitenacy.sh
+- name: APPLY MULTINANT PROJECT SETUP
+  hosts: masters,localhost
+  roles:
+    - MULTITENANT-ROLE
+
+- name: ON BOARD NEW USERS AND GROUPS
+  hosts: masters,localhost
+  roles:
+    - CREATE-PROJECTS-ROLE

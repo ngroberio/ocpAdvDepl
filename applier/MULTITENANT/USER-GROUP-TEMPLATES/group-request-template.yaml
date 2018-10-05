@@ -1,0 +1,17 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: group-request-template
+  namespace: default
+objects:
+- apiVersion: user.openshift.io/v1
+  kind: Group
+  metadata:
+    creationTimestamp: null
+    name: ${GROUP_NAME}
+  users: ${{GROUP_USERS}}
+parameters:
+- name: GROUP_NAME
+- name: GROUP_USERS
+  value: "[]"

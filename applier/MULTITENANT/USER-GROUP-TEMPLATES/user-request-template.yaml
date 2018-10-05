@@ -1,0 +1,21 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: user-request-template
+  namespace: default
+objects:
+- apiVersion: user.openshift.io/v1
+  groups: null
+  identities:
+  - htpasswd_auth:${USER_NAME}
+  kind: User
+  metadata:
+    creationTimestamp: null
+    labels:
+      ${CLIENT_LABEL_KEY}: ${CLIENT_LABEL_VALUE}
+    name: ${USER_NAME}
+parameters:
+- name: USER_NAME
+- name: CLIENT_LABEL_KEY
+- name: CLIENT_LABEL_VALUE

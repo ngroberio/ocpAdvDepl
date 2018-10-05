@@ -1,0 +1,4 @@
+podNodeSelectorPluginConfig:
+  clusterDefaultNodeSelector: "client=common"
+  clientalpha: "client=alpha"
+  clientbeta: "client=beta"
