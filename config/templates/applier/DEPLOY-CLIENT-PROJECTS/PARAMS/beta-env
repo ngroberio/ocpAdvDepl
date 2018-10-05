@@ -1,0 +1,7 @@
+GROUP_NAME=beta-users
+GROUP_USERS='["brian","betty"]'
+CLIENT=beta
+PROJECT_ADMIN_USER=betty
+PROJECT_NAME=beta
+CLIENT_NODE_SELECTOR='client=beta'
+APP_NAMESPACE=beta

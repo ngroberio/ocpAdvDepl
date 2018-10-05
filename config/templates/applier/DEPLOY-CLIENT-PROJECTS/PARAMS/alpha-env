@@ -1,0 +1,7 @@
+GROUP_NAME=alpha-users
+GROUP_USERS='["amy","andrew"]'
+CLIENT=alpha
+PROJECT_ADMIN_USER=amy
+PROJECT_NAME=alpha
+CLIENT_NODE_SELECTOR='client=alpha'
+APP_NAMESPACE=alpha
