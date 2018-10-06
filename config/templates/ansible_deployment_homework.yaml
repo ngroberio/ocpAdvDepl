@@ -72,7 +72,7 @@
   hosts: localhost
   tasks:
     - name: Create 25 definitions files 10G size
-      script:  /root/ocpAdvDepl/config/infra/pvs/create_pvs_10Gigs.sh
+      script: /root/ocpAdvDepl/config/infra/pvs/create_pvs_10Gigs.sh
 
 - name: CREATE ALL PVs FROM DEFINITIONS FILES
   hosts: localhost
@@ -106,13 +106,13 @@
   hosts: localhost
   tasks:
     - name: Smoke Test
-      script:  /root/ocpAdvDepl/config/bin/nodejs_mongo_smoke_test.sh
+      script: /root/ocpAdvDepl/config/bin/nodejs_mongo_smoke_test.sh
 
 - name: CI CD workflow
   hosts: localhost
   tasks:
     - name: CI CD workflow
-      script:  /root/ocpAdvDepl/config/infra/setup_cicd_no_ha.sh cicd
+      script: /root/ocpAdvDepl/config/infra/setup_cicd_no_ha.sh cicd
 
 - name: HPA CONFIG ON PROD
   hosts: localhost
