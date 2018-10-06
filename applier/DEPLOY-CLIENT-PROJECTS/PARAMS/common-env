@@ -1,0 +1,7 @@
+GROUP_NAME=common-users
+GROUP_USERS='[]'
+CLIENT=common
+PROJECT_ADMIN_USER=admin
+PROJECT_NAME=common
+CLIENT_NODE_SELECTOR='client=common'
+APP_NAMESPACE=common
