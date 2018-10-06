@@ -1,7 +1,0 @@
-GROUP_NAME=charlie-users
-GROUP_USERS='["cain","candy"]'
-CLIENT=charlie
-PROJECT_ADMIN_USER=candy
-PROJECT_NAME=charlie
-CLIENT_NODE_SELECTOR='client=common'
-APP_NAMESPACE=charlie
