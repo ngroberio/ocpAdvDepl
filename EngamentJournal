@@ -7,10 +7,8 @@ Guide
   Then go into the working directory and execute the Ansible playbook script to install the environment. The entire installation will take about an hour.
   cd ocpAdvDepl
 
-  Than you can run:
-    ansible-playbook ./config/templates/ansible_deployment_homework.yaml (ansible Installation)
-    + OR
-    ./install.sh (bash installation that is my main resolution)
+  To install you can run:
+    ./install_ansible.sh (bash installation that is my main resolution)
 
 ++ Uninstallation
   If for any reason you want to clean up your environment run:
@@ -78,9 +76,9 @@ Engagement journal
   There is a load balancer to access the masters called loadbalancer1.$GUID.example.opentlc.com
   There is a load balancer/DNS for both infranodes called *.apps.$GUID.example.opentlc.com
   There are at two infranodes, labeled env=infra
-  ->These are related templates below:
+  ->These are related command below:
     oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=80 -n os-tasks-${GUID}-prod
-    ./config/templates/hosts_template.yaml
+    ./config/templates/hosts_template_ans.yaml
 
 ++ Environment Configuration
   NetworkPolicy is configured and working with projects isolated by default:
@@ -92,7 +90,7 @@ Engagement journal
   Metrics and Logging components run on Infranodes
   Service Catalog, Template Service Broker, and Ansible Service Broker are all working very well.
   -> These are related templates below:
-    ./config/templates/hosts_template.yaml
+    ./config/templates/hosts_template_ans.yaml
 
 ++ CICD Workflow
   Jenkins pod is running with a persistent volume
@@ -103,16 +101,26 @@ Engagement journal
     ./config/templates/os_pipeline_template.yaml
     ./config/templates/setup_jenkins.yaml
   -> These are install scripts lines related below:
-      ./config/infra/setup_cicd.sh
+      ./config/infra/setup_cicd_no_ha.sh
 
 ++ Multitenancy
   Alpha Corp group have two users, amy and Andrew
   Beta Corp group have two users, brian and betty
   Dedicated node for each Client:
-    -> admissionControl plugin sets specific limits per label (client/customer)
+    -> ~this is the related task:
+      APPLY MULTINANT PROJECT SETUP/MULTITENANT-ROLE
 
   The new project template is modified so that it includes a LimitRange
   The new user template is used to create a user object with the specific label value
   ->These are related shell scripts and templates below:
-    ./config/infra/setup_multitenacy.sh
-    ./config/templates/multi_template.yaml
+    ./config/templates/project_templates/multitenant-project-template.yaml
+
+++ Onboarding users
+To onboard new client, the following steps are required
+1. Create users
+  # oc process user-request-template -p CLIENT_LABEL_KEY="client" -p CLIENT_LABEL_VALUE="alpha" -p USER_NAME=amy | oc create -f -
+  # oc process user-request-template -p CLIENT_LABEL_KEY="client" -p CLIENT_LABEL_VALUE="alpha" -p USER_NAME=andrew | oc create -f -
+2. Create group
+  # oc process multitenant-project-request -p PROJECT_DESCRIPTION='' -p PROJECT_DISPLAYNAME='' -p PROJECT_NAME='alpha' -p PROJECT_ADMIN_USER='amy' -p GROUP_NAME=alpha-users -p CLIENT_NODE_SELECTOR='client=alpha' | oc create -f -
+3. Create Projects
+  # oc process group-request-template -p GROUP_NAME=alpha-users -p GROUP_USERS='["amy","andrew"]' | oc create -f -
