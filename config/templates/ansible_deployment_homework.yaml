@@ -95,12 +95,6 @@
       script: /root/ocpAdvDepl/config/bin/addClusterAdmin.sh
     - name: Add Identity Provider
       script: /root/ocpAdvDepl/config/bin/addIdentityProvider.sh
-    - name: Create Alpha Group
-      shell: oc adm groups new alpha amy andrew admin
-    - name: Create Beta Group
-      shell: oc adm groups new beta brian betty admin
-    - name: Create Common Group
-      shell: oc adm groups new common
 
 - name: SMOKE TEST
   hosts: localhost
