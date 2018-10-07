@@ -31,6 +31,10 @@ oc policy add-role-to-group system:image-puller system:serviceaccounts:jenkins -
 oc policy add-role-to-group system:image-puller system:serviceaccounts:jenkins -n tasks-test
 oc policy add-role-to-group system:image-puller system:serviceaccounts:jenkins -n tasks-prod
 
+oc policy add-role-to-user edit system:serviceaccount:cicd-dev:jenkins -n tasks-dev
+oc policy add-role-to-user edit system:serviceaccount:cicd-dev:jenkins -n tasks-test
+oc policy add-role-to-user edit system:serviceaccount:cicd-dev:jenkins -n tasks-prod
+
 oc policy add-role-to-group system:image-puller system:serviceaccounts:admin -n cicd-dev
 oc policy add-role-to-group system:image-puller system:serviceaccounts:admin -n tasks-dev
 oc policy add-role-to-group system:image-puller system:serviceaccounts:admin -n tasks-test
