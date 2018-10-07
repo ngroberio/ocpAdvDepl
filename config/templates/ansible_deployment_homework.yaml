@@ -112,13 +112,13 @@
   hosts: localhost
   tasks:
     - name: CI CD workflow
-      script: /root/ocpAdvDepl/config/infra/setup_cicd_no_ha.sh cicd
+      script: /root/ocpAdvDepl/config/infra/setup_cicd_no_ha.sh cicd-dev
 
 - name: HPA CONFIG ON PROD
   hosts: localhost
   tasks:
     - name: HPA configuration
-      shell: oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=80 -n cicd-prod
+      shell: oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=80 -n tasks-prod
 
 - name: APPLY MULTINANT PROJECT SETUP
   hosts: masters,localhost

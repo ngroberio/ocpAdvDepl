@@ -4,6 +4,6 @@ items:
 - kind: ProjectRequest
   apiVersion: v1
   metadata:
-    name: cicd
+    name: cicd-dev
     creationTimestam: null
-  displayName: CICD
+  displayName: CICD-DEV
