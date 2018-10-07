@@ -112,7 +112,7 @@
   hosts: localhost
   tasks:
     - name: CI CD workflow
-      script: /root/ocpAdvDepl/config/infra/setup_cicd_no_ha.sh cicd-dev
+      script: /root/ocpAdvDepl/config/infra/setup_cicd_no_ha.sh
 
 - name: HPA CONFIG ON PROD
   hosts: localhost

@@ -2,7 +2,7 @@ export GUID=`hostname | cut -d"." -f2`
 
 echo ">>> SETUP amy CICD SIMPLE PIPELINE"
 #oc login -u amy -pr3dh4t1!
-#oc login -u system:admin
+oc login -u system:admin
 oc new-project cicd-dev
 oc new-project tasks-dev
 oc new-project tasks-test
@@ -27,7 +27,14 @@ oc policy add-role-to-user edit system:serviceaccount:admin -n tasks-test
 oc policy add-role-to-user edit system:serviceaccount:admin -n tasks-prod
 
 oc policy add-role-to-group system:image-puller system:serviceaccounts:jenkins -n cicd-dev
+oc policy add-role-to-group system:image-puller system:serviceaccounts:jenkins -n tasks-dev
+oc policy add-role-to-group system:image-puller system:serviceaccounts:jenkins -n tasks-test
+oc policy add-role-to-group system:image-puller system:serviceaccounts:jenkins -n tasks-prod
+
 oc policy add-role-to-group system:image-puller system:serviceaccounts:admin -n cicd-dev
+oc policy add-role-to-group system:image-puller system:serviceaccounts:admin -n tasks-dev
+oc policy add-role-to-group system:image-puller system:serviceaccounts:admin -n tasks-test
+oc policy add-role-to-group system:image-puller system:serviceaccounts:admin -n tasks-prod
 echo "<<< SETUP JENKINS DONE"
 
 echo ">>> SETUP OPENSHIFT TO RUN PIPELINE"
