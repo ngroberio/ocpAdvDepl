@@ -1,0 +1,63 @@
+openshift_cluster_content:
+# ALPHA CLIENT
+- object: user
+  content:
+  - name: "CREATE USER AMY"
+    template: "{{role_path}}/../../applier/MULTITENANT/USER-GROUP-TEMPLATES/user-request-template.yaml"
+    params: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/PARAMS/amy-env"
+
+- object: user
+  content:
+  - name: "CREATE USER ANDREW"
+    template: "{{role_path}}/../../applier/MULTITENANT/USER-GROUP-TEMPLATES/user-request-template.yaml"
+    params: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/PARAMS/andrew-env"
+
+- object: groups
+  content:
+  - name: "CREATE USER GROUPS ALPHA"
+    template: "{{role_path}}/../../applier/MULTITENANT/USER-GROUP-TEMPLATES/group-request-template.yaml"
+    params: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/PARAMS/alpha-env"
+
+- object: project
+  content:
+  - name: "CREATE ALPHA ENV PROJECT"
+    template: "{{role_path}}/../../applier/MULTITENANT/PROJECT-TEMPLATES/multitenant-project-template.yaml"
+    params: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/PARAMS/alpha-env"
+
+- object: app
+  content:
+  - name: "DEPLOY ALPHA ENV APP"
+    template: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/TEMPLATES/sample-app.yaml"
+    params: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/PARAMS/alpha-env"
+
+# BETA CLIENT
+
+- object: user
+  content:
+  - name: "CREATE USER BRIAN"
+    template: "{{role_path}}/../../applier/MULTITENANT/USER-GROUP-TEMPLATES/user-request-template.yaml"
+    params: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/PARAMS/brian-env"
+
+- object: user
+  content:
+  - name: "CREATE USER BETTY"
+    template: "{{role_path}}/../../applier/MULTITENANT/USER-GROUP-TEMPLATES/user-request-template.yaml"
+    params: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/PARAMS/betty-env"
+
+- object: groups
+  content:
+  - name: "CREATE GROUPS BETA ENV"
+    template: "{{role_path}}/../../applier/MULTITENANT/USER-GROUP-TEMPLATES/group-request-template.yaml"
+    params: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/PARAMS/beta-env"
+
+- object: project
+  content:
+  - name: "CREATE PROJECT BETA"
+    template: "{{role_path}}/../../applier/MULTITENANT/PROJECT-TEMPLATES/multitenant-project-template.yaml"
+    params: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/PARAMS/beta-env"
+
+- object: app
+  content:
+  - name: "DEPLOY BETA APP"
+    template: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/TEMPLATES/sample-app.yaml"
+    params: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/PARAMS/beta-env"

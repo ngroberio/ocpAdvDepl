@@ -1,0 +1,9 @@
+---
+- name: CHECK OPENSHIFT CLUSTER
+  hosts: masters[0]
+  tasks:
+    - name: COPY THE .kube FOLDER FROM MASTER1 TO BASTION
+      fetch:
+        src: /root/.kube/config
+        dest: /root/.kube/config
+        flat: yes

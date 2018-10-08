@@ -1,0 +1,6 @@
+---
+- name: CI CD workflow
+  hosts: localhost
+  tasks:
+    - name: CI CD workflow
+      script: setup_cicd_no_ha.sh

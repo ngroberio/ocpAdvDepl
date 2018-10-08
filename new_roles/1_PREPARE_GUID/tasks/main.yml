@@ -1,0 +1,6 @@
+---
+- name: PREPARE GUID AND ENV VARIABLES FOR ALL HOSTS
+  hosts: all
+  tasks:
+    - name: ALL GUID ENV VARIABLES
+      shell: export GUID=`hostname | cut -d"." -f2`; echo "export GUID=$GUID" >> $HOME/.bashrc
