@@ -33,4 +33,14 @@
 - name: SMOKE TEST
   hosts: localhost
   roles:
-    - 5_POST_CLUSTER_DEPLOY
+    - 6_SMOKE_TEST
+
+- name: CREATE PVS
+  hosts: localhost
+  roles:
+    - 7_CREATE_PVS
+
+- name: DEPLOY JENKINS CICD PIPELINE
+  hosts: localhost
+  roles:
+    - 8_CICD_WORKFLOW
