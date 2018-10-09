@@ -8,4 +8,6 @@
 
 - name: SMOKE TEST CLEAN UP
   script: oc delete project smoke-test-nodejs
+
+- name: PROJECT DEFUALT
   script: oc project default
