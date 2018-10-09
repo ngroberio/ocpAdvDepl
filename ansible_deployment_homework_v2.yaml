@@ -18,3 +18,14 @@
   hosts: localhost
   roles:
     - 4_INITIATE_HOSTS_FILE
+
+- name: CHECK ANSIBLE PREREQUISITES
+  import_playbook: /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
+
+- name: EXECUTE ANSIBLE DEPLOYER
+  import_playbook: /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
+
+- name: POST CLUSTER DEPLOY
+  hosts: all,localhost
+  roles:
+    - 4_POST_CLUSTER_DEPLOY
