@@ -2,7 +2,7 @@
 - name: SMOKE TEST
   script: nodejs_mongo_smoke_test.sh
 
-- name: "CHECK IF POD IS ALIVE"
+- name: CHECK IF POD IS ALIVE
   uri:
     url: "nodejs-mongo-persistent-smoke-test-nodejs.apps.${GUID}.example.opentlc.com"
     status_code: 200
