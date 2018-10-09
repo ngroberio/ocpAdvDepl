@@ -11,12 +11,3 @@
 
 - name: EXECUTE ANSIBLE DEPLOYER
   import_playbook: /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
-
-- name: CLUSTER CONFIGURATION, CREATE PVS, CICD WORKFLOW, ON BOARD NEW USERS
-  roles:
-    - 7_PREPARE_KUBE_FOLDER
-    - 8_CREATE_CLUSTER_ADMIN
-    - 9_CREATE_PVS
-    - 10_SMOKE_TEST
-    - 11_CICD_WORKFLOW
-    - 12_HPA_CONFIG_PROD
