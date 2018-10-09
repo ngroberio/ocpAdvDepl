@@ -1,3 +1,4 @@
 ---
 - name: CHECK ANSIBLE PREREQUISITES
+  hosts: localhost
   import_playbook: /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
