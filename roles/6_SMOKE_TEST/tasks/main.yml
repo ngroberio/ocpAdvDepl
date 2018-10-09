@@ -5,7 +5,6 @@
 - name: CHECK IF POD IS ALIVE
   script: curl -o /dev/null -s -w "%{http_code}" http://nodejs-mongo-persistent-smoke-test-nodejs.apps.${GUID}.example.opentlc.com
   register: result
-  msg: result
   until: result == 200
   retries: 120
   delay: 2
