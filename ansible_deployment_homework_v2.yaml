@@ -29,3 +29,8 @@
   hosts: all,localhost
   roles:
     - 5_POST_CLUSTER_DEPLOY
+
+- name: SMOKE TEST
+  hosts: localhost
+  roles:
+    - 5_POST_CLUSTER_DEPLOY

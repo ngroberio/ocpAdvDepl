@@ -1,0 +1,3 @@
+---
+- name: SMOKE TEST
+  script: nodejs_mongo_smoke_test.sh
