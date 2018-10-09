@@ -1,32 +1,24 @@
 ---
-- name: CREATE PVS USERS
+- name: CREATE PVS
   hosts: nfs
-  tasks:
-    - name: Create PVs
-      script:  /root/ocpAdvDepl/config/infra/pvs/create_pvs.sh
+  script:  /root/ocpAdvDepl/config/infra/pvs/create_pvs.sh
 
 - name: CREATE 25 PVs 5 gigs
   hosts: localhost
-  tasks:
-    - name: Create 25 definitions files 5G size
-      script:  /root/ocpAdvDepl/config/infra/pvs/create_pvs_5gigs.sh
+  script:  /root/ocpAdvDepl/config/infra/pvs/create_pvs_5gigs.sh
 
 - name: CREATE 25 PVs 10 gigs
   hosts: localhost
-  tasks:
-    - name: Create 25 definitions files 10G size
-      script: /root/ocpAdvDepl/config/infra/pvs/create_pvs_10Gigs.sh
+  script: /root/ocpAdvDepl/config/infra/pvs/create_pvs_10Gigs.sh
 
 - name: CREATE ALL PVs FROM DEFINITIONS FILES
   hosts: localhost
-  tasks:
-    - name: Create 25 definitions files 5G size
-      shell: cat /root/pvs/* | oc create -f -
+  shell: cat /root/pvs/* | oc create -f -
 
-- name:  FIX NFS PV RECYCLING
+- name:  FIX NFS PV RECYCLING - Pulling ose recycler image
   hosts: nodes
-  tasks:
-    - name: Pulling ose recycler image
-      shell: docker pull registry.access.redhat.com/openshift3/ose-recycler:latest
-    - name: Tagging ose recycler image
-      shell: docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.9.30
+  shell: docker pull registry.access.redhat.com/openshift3/ose-recycler:latest
+
+- name:  FIX NFS PV RECYCLING - Tagging ose recycler image
+  hosts: nodes
+  shell: docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.9.30

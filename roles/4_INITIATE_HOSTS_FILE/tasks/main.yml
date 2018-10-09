@@ -1,6 +1,4 @@
 ---
 - name: INITIATE HOSTS FILES
   hosts: localhost
-  tasks:
-    - name: INITIATE HOSTS
-      script: initiateHostsTemplate_ans.sh
+  script: initiateHostsTemplate_ans.sh

@@ -1,16 +1,16 @@
 ---
 - name: POST INSTALL CONFIG
   hosts: localhost
-  tasks:
-    - name: make sure you are system:dmin
-      shell: oc whoami | grep system:admin
-    - name: grant admin to administrator privilege
-      shell: oc adm policy add-cluster-role-to-user cluster-admin admin
+    shell: oc whoami | grep system:admin
+
+- name: SET ADMIN USER AS CLUSTER ADMIN
+  hosts: localhost
+    shell: oc adm policy add-cluster-role-to-user cluster-admin admin
 
 - name: CREATE CLUSTER ADMIN
   hosts: localhost
-  tasks:
-    - name: Create Cluster admin
-      script: addClusterAdmin.sh
-    - name: Add Identity Provider
-      script: addIdentityProvider.sh
+  script: addClusterAdmin.sh
+
+- name: ADD IDENTITY PROVIDER
+  hosts: localhost
+  script: addIdentityProvider.sh

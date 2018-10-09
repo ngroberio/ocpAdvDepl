@@ -1,6 +1,4 @@
 ---
 - name: SMOKE TEST
   hosts: localhost
-  tasks:
-    - name: Smoke Test
-      script: nodejs_mongo_smoke_test.sh
+  script: nodejs_mongo_smoke_test.sh
