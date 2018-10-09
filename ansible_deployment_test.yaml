@@ -1,5 +1,5 @@
 ---
-- name: SMOKE TEST
-  hosts: localhost
+- name: CREATE PVS
+  hosts: all,localhost
   roles:
-    - 6_SMOKE_TEST
+    - 7_CREATE_PVS
