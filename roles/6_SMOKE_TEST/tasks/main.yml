@@ -7,7 +7,7 @@
     msg: ">>>>>>> [ SMOKE TEST SUCCEEDED ] <<<<<<<<<"
 
 - name: SMOKE TEST CLEAN UP
-  script: oc delete project smoke-test-nodejs
+  shell: oc delete project smoke-test-nodejs
 
 - name: PROJECT DEFUALT
-  script: oc project default
+  shell: oc project default
