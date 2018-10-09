@@ -2,17 +2,9 @@
 - name: SMOKE TEST
   script: nodejs_mongo_smoke_test.sh
 
-- name: TEST SMOKE TEST URL
-  shell: echo http://$(sudo oc get route -n smoke-test | awk 'NR>1 {print $2}')
-  register: url
-
-- name: DEBUG SMOKE TEST URL STDOUT
-  debug:
-    msg: "{{ url.stdout }}"
-
 - name: "CHECK IF POD IS ALIVE"
   uri:
-    url: "{{ url.stdout }}"
+    url: "nodejs-mongo-persistent-smoke-test-nodejs.apps.${GUID}.example.opentlc.com"
     status_code: 200
   register: result
   until: result.status == 200
@@ -23,3 +15,4 @@
   debug:
     msg: ">>>>>>> [ SMOKE TEST SUCCEEDED ] <<<<<<<<<"
   when: result.status == 200
+  script: oc delete project smoke-test-nodejs
