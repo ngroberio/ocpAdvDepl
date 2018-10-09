@@ -7,4 +7,4 @@ export GUID=`hostname | cut -d"." -f2`; echo "export GUID=$GUID" >> $HOME/.bashr
 echo 'EXPORTED GUID >>> '$GUID
 
 echo '>>>>>>>>>> [ RUN INSTALL PLAYBOOK ] <<<<<<<<<<<<'
-ansible-playbook -v -f 20 config/templates/ansible_deployment_homework.yaml --extra-vars GUID=$GUID
+ansible-playbook -v -f 20 ansible_deployment_homework_v2.yaml --extra-vars GUID=$GUID
