@@ -1,0 +1,5 @@
+---
+- name: SMOKE TEST
+  hosts: localhost
+  roles:
+    - 6_SMOKE_TEST
