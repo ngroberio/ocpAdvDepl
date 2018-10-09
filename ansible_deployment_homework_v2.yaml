@@ -28,4 +28,4 @@
 - name: POST CLUSTER DEPLOY CHECKS
   hosts: all,localhost
   roles:
-    - 4_POST_CLUSTER_DEPLOY
+    - 5_POST_CLUSTER_DEPLOY
