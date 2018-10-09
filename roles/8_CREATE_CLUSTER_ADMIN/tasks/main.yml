@@ -1,11 +1,11 @@
 ---
 - name: POST INSTALL CONFIG
   hosts: localhost
-    shell: oc whoami | grep system:admin
+  shell: oc whoami | grep system:admin
 
 - name: SET ADMIN USER AS CLUSTER ADMIN
   hosts: localhost
-    shell: oc adm policy add-cluster-role-to-user cluster-admin admin
+  shell: oc adm policy add-cluster-role-to-user cluster-admin admin
 
 - name: CREATE CLUSTER ADMIN
   hosts: localhost
