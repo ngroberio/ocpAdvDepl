@@ -1,5 +1,6 @@
 ---
 - name: PREINSTALL AND INITIATE HOSTS FILES
+  hosts: all
   roles:
     - 1_PREPARE_GUID
     - 2_PRE_CHECKS
@@ -13,6 +14,7 @@
   import_playbook: /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
 
 - name: CLUSTER CONFIGURATION, CREATE PVS, CICD WORKFLOW, ON BOARD NEW USERS
+  hosts: all
   roles:
     - 7_PREPARE_KUBE_FOLDER
     - 8_CREATE_CLUSTER_ADMIN
