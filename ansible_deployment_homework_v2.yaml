@@ -1,6 +1,6 @@
 ---
 - name: PREINSTALL AND INITIATE HOSTS FILESs
-  hosts: all
+  hosts: localhost
   roles:
     - 1_PREPARE_GUID
     - 2_PRE_CHECKS
