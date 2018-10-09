@@ -1,15 +1,15 @@
 ---
 - name: CREATE PVS
   hosts: nfs
-  script:  /root/ocpAdvDepl/config/infra/pvs/create_pvs.sh
+  script:  create_pvs.sh
 
 - name: CREATE 25 PVs 5 gigs
   hosts: localhost
-  script:  /root/ocpAdvDepl/config/infra/pvs/create_pvs_5gigs.sh
+  script:  create_pvs_5gigs.sh
 
 - name: CREATE 25 PVs 10 gigs
   hosts: localhost
-  script: /root/ocpAdvDepl/config/infra/pvs/create_pvs_10Gigs.sh
+  script: create_pvs_10Gigs.sh
 
 - name: CREATE ALL PVs FROM DEFINITIONS FILES
   hosts: localhost
