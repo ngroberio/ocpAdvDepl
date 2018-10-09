@@ -16,3 +16,7 @@
   shell: oc get nodes
   when: "inventory_hostname == 'localhost'"
   tags: check-nodes
+
+- name: CREATE THE ADMIN USER
+  script: addClusterAdmin.sh
+  when: "'masters' in group_names"
