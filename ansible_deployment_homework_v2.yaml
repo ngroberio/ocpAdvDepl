@@ -24,3 +24,8 @@
 
 - name: EXECUTE ANSIBLE DEPLOYER
   import_playbook: /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
+
+- name: POST CLUSTER DEPLOY CHECKS
+  hosts: all,localhost
+  roles:
+    - 5_POST_CLUSTER_DEPLOY
