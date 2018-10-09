@@ -3,9 +3,7 @@
   script: nodejs_mongo_smoke_test.sh
 
 - name: CHECK IF POD IS ALIVE
-  uri:
-    url: "http://nodejs-mongo-persistent-smoke-test-nodejs.apps.${GUID}.example.opentlc.com"
-    status_code: 200
+  script: curl -i --head http://nodejs-mongo-persistent-smoke-test-nodejs.apps.${GUID}.example.opentlc.com
   register: result
   until: result.status == 200
   retries: 120
