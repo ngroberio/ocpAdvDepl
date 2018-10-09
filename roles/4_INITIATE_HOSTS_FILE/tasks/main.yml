@@ -1,4 +1,6 @@
 ---
 - name: INITIATE HOSTS FILES
-  hosts: localhost
-  script: initiateHostsTemplate_ans.sh
+  template: src=hosts.j2 dest=/etc/ansible/hosts
+
+- name: REFRESH
+  meta: refresh_inventory
