@@ -1,10 +1,8 @@
 ---
 - name: INSTALL REQUIRED PACKAGES
   hosts: localhost
-  tasks:
-    - name: CHECK REQUIRED PACKAGES
-      yum:
-        name:
-          - atomic-openshift-utils
-          - atomic-openshift-clients
-        state: present
+  yum:
+    name:
+      - atomic-openshift-utils
+      - atomic-openshift-clients
+    state: present
