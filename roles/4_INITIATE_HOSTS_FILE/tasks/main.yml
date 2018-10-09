@@ -1,6 +1,6 @@
 ---
 - name: INITIATE HOSTS FILES
-  template: src=hosts.j2 dest=/etc/ansible/hosts
+  template: src=host_template.j2 dest=/etc/ansible/hosts
 
 - name: REFRESH
   meta: refresh_inventory
