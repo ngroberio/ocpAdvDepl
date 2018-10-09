@@ -15,4 +15,6 @@
   debug:
     msg: ">>>>>>> [ SMOKE TEST SUCCEEDED ] <<<<<<<<<"
   when: result.status == 200
+
+- name: SMOKE TEST CLEAN UP
   script: oc delete project smoke-test-nodejs
