@@ -1,8 +1,20 @@
 ---
-- name: PREINSTALL AND INITIATE HOSTS FILESs
-  hosts:
+- name: PREP GUID
+  hosts: all
   roles:
     - 1_PREPARE_GUID
+
+- name: PRE CHECKS
+  hosts: nodes,nfs
+  roles:
     - 2_PRE_CHECKS
+
+- name: INSTALL REQUIRED PACKAGES
+  hosts: localhost
+  roles:
     - 3_INSTALL_REQUIRED_PACKAGES
+
+- name: INITIATE HOSTS FILE
+  hosts: localhost
+  roles:
     - 4_INITIATE_HOSTS_FILE
