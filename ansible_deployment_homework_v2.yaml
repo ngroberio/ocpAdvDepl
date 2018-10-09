@@ -5,9 +5,3 @@
     - 2_PRE_CHECKS
     - 3_INSTALL_REQUIRED_PACKAGES
     - 4_INITIATE_HOSTS_FILE
-
-- name: CHECK ANSIBLE PREREQUISITES
-  import_playbook: /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
-
-- name: EXECUTE ANSIBLE DEPLOYER
-  import_playbook: /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
