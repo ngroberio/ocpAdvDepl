@@ -1,5 +1,5 @@
 ---
-- name: PREP GUID
+- name: PREPARE GUID
   hosts: all
   roles:
     - 1_PREPARE_GUID
