@@ -1,12 +1,8 @@
 ---
-- name: CHECK DOCKER INSTALL AND CONFIG
+- name: CHECK DOCKER INSTALL AND RESTART
   hosts: nodes
-  tasks:
-    - name: docker restart
-      shell: systemctl status docker | grep Active
+  shell: systemctl status docker | grep Active
 
 - name: CHECK NFS SHARED VOLUMES ON HOSTS
   hosts: nfs
-  tasks:
-    - name: CHECK NFS SHARED VOLUMES
-      shell: exportfs
+  shell: exportfs
