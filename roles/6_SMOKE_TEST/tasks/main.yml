@@ -1,3 +1,25 @@
 ---
 - name: SMOKE TEST
   script: nodejs_mongo_smoke_test.sh
+
+- name: TEST SMOKE TEST URL
+  shell: echo http://$(sudo oc get route -n smoke-test | awk 'NR>1 {print $2}')
+  register: url
+
+- name: DEBUG SMOKE TEST URL STDOUT
+  debug:
+    msg: "{{ url.stdout }}"
+
+- name: "CHECK IF POD IS ALIVE"
+  uri:
+    url: "{{ url.stdout }}"
+    status_code: 200
+  register: result
+  until: result.status == 200
+  retries: 120
+  delay: 2
+
+- name: SMOKE TEST SUCEEDED MESSAGE
+  debug:
+    msg: ">>>>>>> [ SMOKE TEST SUCCEEDED ] <<<<<<<<<"
+  when: result.status == 200
