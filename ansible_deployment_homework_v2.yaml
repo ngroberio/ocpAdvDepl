@@ -44,3 +44,8 @@
   hosts: localhost
   roles:
     - 8_CICD_WORKFLOW
+
+- name: CONFIG HPA TO PROD
+  hosts: localhost
+  roles:
+    - 9_HPA_CONFIG_PROD
