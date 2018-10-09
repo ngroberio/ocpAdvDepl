@@ -3,7 +3,7 @@
   script: nodejs_mongo_smoke_test.sh
 
 - name: CHECK IF POD IS ALIVE
-  script: curl -i --head http://nodejs-mongo-persistent-smoke-test-nodejs.apps.${GUID}.example.opentlc.com
+  script: curl -o /dev/null -s -w "%{http_code}" http://nodejs-mongo-persistent-smoke-test-nodejs.apps.${GUID}.example.opentlc.com
   register: result
   until: result.status == 200
   retries: 120
@@ -12,7 +12,7 @@
 - name: SMOKE TEST SUCEEDED MESSAGE
   debug:
     msg: ">>>>>>> [ SMOKE TEST SUCCEEDED ] <<<<<<<<<"
-  when: result.status == 200
+  when: result == 200
 
 - name: SMOKE TEST CLEAN UP
   script: oc delete project smoke-test-nodejs
