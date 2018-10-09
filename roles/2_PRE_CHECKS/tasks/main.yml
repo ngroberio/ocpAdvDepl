@@ -1,8 +1,28 @@
 ---
-- name: CHECK DOCKER INSTALL AND RESTART
-  hosts: nodes
-  shell: systemctl status docker | grep Active
+- name: DOCKER INSTALLATION VERIFICATION
+  yum:
+    name: docker
+    state: present
+  when: "'nodes' in group_names"
+  tags: verify-docker
 
-- name: CHECK NFS SHARED VOLUMES ON HOSTS
-  hosts: nfs
-  shell: exportfs
+- name: DOCKER CONFIGURATION
+  shell: systemctl restart docker
+  when: "'nodes' in group_names"
+  tags: verify-docker
+
+- name: CHECK NFS PACKAGES NFS-UTILS RPCBIND IN NFS NODES
+  yum:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - nfs-utils
+    - rpcbind
+  when: "'nfs' in group_names"
+  tags: verify-nfs
+
+- name: EXPORTFS CHECKS
+  shell : exportfs
+  when: "'nfs' in group_names"
+  tags: verify-nfs
