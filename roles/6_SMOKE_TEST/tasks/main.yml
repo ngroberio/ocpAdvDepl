@@ -5,14 +5,14 @@
 - name: CHECK IF POD IS ALIVE
   script: curl -o /dev/null -s -w "%{http_code}" http://nodejs-mongo-persistent-smoke-test-nodejs.apps.${GUID}.example.opentlc.com
   register: result
-  until: "{{ result }} == 200"
+  until: "{{ result }} == '200'"
   retries: 120
   delay: 2
 
 - name: SMOKE TEST SUCEEDED MESSAGE
   debug:
     msg: ">>>>>>> [ SMOKE TEST SUCCEEDED ] <<<<<<<<<"
-  when: "{{ result }} == 200"
+  when: "{{ result }} == '200'"
 
 - name: SMOKE TEST CLEAN UP
   script: oc delete project smoke-test-nodejs
