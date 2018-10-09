@@ -8,11 +8,9 @@
     - 4_INITIATE_HOSTS_FILE
 
 - name: CHECK ANSIBLE PREREQUISITES
-  hosts: localhost
   import_playbook: /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
 
 - name: EXECUTE ANSIBLE DEPLOYER
-  hosts: localhost
   import_playbook: /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
 
 - name: CLUSTER CONFIGURATION, CREATE PVS, CICD WORKFLOW, ON BOARD NEW USERS
