@@ -1,0 +1,24 @@
+---
+- name: CREATE PVS
+  hosts: nfs
+  script:  /root/ocpAdvDepl/config/infra/pvs/create_pvs.sh
+
+- name: CREATE 25 PVs 5 gigs
+  hosts: localhost
+  script:  /root/ocpAdvDepl/config/infra/pvs/create_pvs_5gigs.sh
+
+- name: CREATE 25 PVs 10 gigs
+  hosts: localhost
+  script: /root/ocpAdvDepl/config/infra/pvs/create_pvs_10Gigs.sh
+
+- name: CREATE ALL PVs FROM DEFINITIONS FILES
+  hosts: localhost
+  shell: cat /root/pvs/* | oc create -f -
+
+- name:  FIX NFS PV RECYCLING - Pulling ose recycler image
+  hosts: nodes
+  shell: docker pull registry.access.redhat.com/openshift3/ose-recycler:latest
+
+- name:  FIX NFS PV RECYCLING - Tagging ose recycler image
+  hosts: nodes
+  shell: docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.9.30
