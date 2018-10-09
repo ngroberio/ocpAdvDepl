@@ -8,4 +8,4 @@ oc get route
 curl -i --head http://nodejs-mongo-persistent-smoke-test-nodejs.apps.${GUID}.example.opentlc.com
 sleep 30
 #oc delete project smoke-test-nodejs
-oc project default
+#oc project default
