@@ -49,3 +49,13 @@
   hosts: localhost
   roles:
     - 9_HPA_CONFIG_PROD
+
+- name: CONFIG MULTITENANT
+  hosts: masters,localhost
+  roles:
+    - 10_MULTITENANT_ROLE
+
+- name: CREATE PROJECTS ON BOARD USERS
+  hosts: masters,localhost
+  roles:
+    - 11_CREATE_PROJECTS_ROLE
