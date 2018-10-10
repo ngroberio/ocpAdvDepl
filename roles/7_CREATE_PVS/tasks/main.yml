@@ -1,9 +1,33 @@
 ---
-- name: CREATE PVS
-  script:  create_pvs.sh
+- name: CHECK system:admin ROLE
+  shell: oc whoami
+  when: "inventory_hostname == 'localhost'"
+  tags: check-role
+
+- name: CHECK ALL NODES
+  shell: oc get nodes
+  when: "inventory_hostname == 'localhost'"
+  tags: check-nodes
+
+- name: CREATE ALL PV FOLDERS
+  file:
+    dest: "/srv/nfs/user-vols/pv{{ item }}"
+    state: directory
+    group: nfsnobody
+    owner: nfsnobody
+    mode: 0777
+  with_sequence: start=1 end=50
+  when: "'nfs' in group_names"
+  tags: create-pv-dir
+
+- name: CONFIGURE THE EXPORTS
+  shell: echo /srv/nfs/user-vols/pv{{ item }} >> /etc/exports.d/openshift-uservols.exports
+  with_sequence: start=1 end=50
+  when: "'nfs' in group_names"
+  tags: configure-exports
 
 - name: CREATE 25 PVs 5 gigs
-  script:  create_pvs_5gigs.sh
+  script: create_pvs_5gigs.sh
 
 - name: CREATE 25 PVs 10 gigs
   script: create_pvs_10Gigs.sh
@@ -11,8 +35,9 @@
 - name: CREATE ALL PVs FROM DEFINITIONS FILES
   shell: cat /root/pvs/* | oc create -f -
 
-- name:  FIX NFS PV RECYCLING - Pulling ose recycler image
-  shell: docker pull registry.access.redhat.com/openshift3/ose-recycler:latest
-
-- name:  FIX NFS PV RECYCLING - Tagging ose recycler image
-  shell: docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.9.30
+- name: FIX NFS PERSISTENCE
+  shell: "{{ item }}"
+  with_items:
+    - "docker pull registry.access.redhat.com/openshift3/ose-recycler:latest"
+    - "docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.9.30"
+  when: "'nodes' in group_names"
