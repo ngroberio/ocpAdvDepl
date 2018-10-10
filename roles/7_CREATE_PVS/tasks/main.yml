@@ -1,4 +1,12 @@
 ---
+- name: COPY THE CONFIG FILE FROM MASTERS
+  fetch:
+    src: /root/.kube/config
+    dest: /root/.kube/config
+    flat: yes
+    tags: check-role
+  when: "'masters' in group_names"
+
 - name: CHECK system:admin ROLE
   shell: oc whoami
   when: "inventory_hostname == 'localhost'"
