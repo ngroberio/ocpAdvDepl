@@ -10,12 +10,10 @@
 - name: CHECK system:admin ROLE
   shell: oc whoami
   when: "inventory_hostname == 'localhost'"
-  tags: check-role
 
 - name: CHECK ALL NODES
   shell: oc get nodes
   when: "inventory_hostname == 'localhost'"
-  tags: check-nodes
 
 - name: CREATE ALL PV FOLDERS
   file:
