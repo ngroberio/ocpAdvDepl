@@ -26,7 +26,7 @@
   when: "'nfs' in group_names"
 
 - name: CONFIGURE THE EXPORTS
-  shell: echo /srv/nfs/user-vols/pv{{ item }} *(rw,root_squash) >> /etc/exports.d/openshift-uservols.exports
+  shell: echo "/srv/nfs/user-vols/pv{{ item }} *(rw,root_squash)" >> /etc/exports.d/openshift-uservols.exports
   with_sequence: start=1 end=50
   when: "'nfs' in group_names"
 
