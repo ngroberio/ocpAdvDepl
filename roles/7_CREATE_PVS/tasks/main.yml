@@ -26,13 +26,11 @@
     mode: 0777
   with_sequence: start=1 end=50
   when: "'nfs' in group_names"
-  tags: create-pv-dir
 
 - name: CONFIGURE THE EXPORTS
   shell: echo /srv/nfs/user-vols/pv{{ item }} >> /etc/exports.d/openshift-uservols.exports
   with_sequence: start=1 end=50
   when: "'nfs' in group_names"
-  tags: configure-exports
 
 - name: CREATE 25 PVs 5 gigs
   script: create_pvs_5gigs.sh
