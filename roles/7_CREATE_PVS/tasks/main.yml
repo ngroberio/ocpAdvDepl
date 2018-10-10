@@ -32,12 +32,15 @@
 
 - name: CREATE 25 PVs 5 gigs
   script: create_pvs_5gigs.sh
+  when: "inventory_hostname == 'localhost'"
 
 - name: CREATE 25 PVs 10 gigs
   script: create_pvs_10Gigs.sh
+  when: "inventory_hostname == 'localhost'"
 
 - name: CREATE ALL PVs FROM DEFINITIONS FILES
   shell: cat /root/pvs/* | oc create -f -
+  when: "inventory_hostname == 'localhost'"
 
 - name: FIX NFS PERSISTENCE
   shell: "{{ item }}"
