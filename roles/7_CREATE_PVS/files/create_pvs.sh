@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 export GUID=`hostname | cut -d"." -f2`
 
-mkdir -p /srv/nfs/user-vols/pv{1..200}
+mkdir -p /srv/nfs/user-vols/pv{1..50}
 
 echo ">>> CREATE PV FOR USERS"
 
