@@ -1,4 +1,0 @@
----
-- name: SMOKE TEST
-  hosts: localhost
-  script: nodejs_mongo_smoke_test.sh

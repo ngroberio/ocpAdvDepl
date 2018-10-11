@@ -1,4 +1,0 @@
----
-- name: CREATE CICD workflow
-  hosts: localhost
-  script: setup_cicd_no_ha.sh

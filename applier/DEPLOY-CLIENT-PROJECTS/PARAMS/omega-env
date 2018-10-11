@@ -1,0 +1,7 @@
+GROUP_NAME=omega-users
+GROUP_USERS='["nikola","tesla"]'
+CLIENT=omega
+PROJECT_ADMIN_USER=tesla
+PROJECT_NAME=omega
+CLIENT_NODE_SELECTOR='client=common'
+APP_NAMESPACE=omega

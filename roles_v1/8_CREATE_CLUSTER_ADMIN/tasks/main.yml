@@ -1,8 +1,0 @@
----
-- name: CREATE CLUSTER ADMIN
-  hosts: masters
-  script: addClusterAdmin.sh
-
-- name: ADD IDENTITY PROVIDER
-  hosts: masters
-  script: addIdentityProvider.sh

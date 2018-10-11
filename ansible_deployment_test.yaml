@@ -1,5 +1,0 @@
----
-- name: CREATE PVS
-  hosts: localhost
-  roles:
-    - 7_CREATE_PVS

@@ -61,3 +61,35 @@ openshift_cluster_content:
   - name: "DEPLOY BETA APP"
     template: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/TEMPLATES/sample-app.yaml"
     params: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/PARAMS/beta-env"
+
+# OMEGA CLIENT
+
+- object: user
+  content:
+  - name: "CREATE USER NIKOLA"
+    template: "{{role_path}}/../../applier/MULTITENANT/USER-GROUP-TEMPLATES/user-request-template.yaml"
+    params: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/PARAMS/nikola-env"
+
+- object: user
+  content:
+  - name: "CREATE USER TESLA"
+    template: "{{role_path}}/../../applier/MULTITENANT/USER-GROUP-TEMPLATES/user-request-template.yaml"
+    params: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/PARAMS/tesla-env"
+
+- object: groups
+  content:
+  - name: "CREATE GROUPS OMEGA ENV"
+    template: "{{role_path}}/../../applier/MULTITENANT/USER-GROUP-TEMPLATES/group-request-template.yaml"
+    params: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/PARAMS/omega-env"
+
+- object: project
+  content:
+  - name: "CREATE PROJECT OMEGA"
+    template: "{{role_path}}/../../applier/MULTITENANT/PROJECT-TEMPLATES/multitenant-project-template.yaml"
+    params: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/PARAMS/omega-env"
+
+- object: app
+  content:
+  - name: "DEPLOY OMEGA APP"
+    template: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/TEMPLATES/sample-app.yaml"
+    params: "{{role_path}}/../../applier/DEPLOY-CLIENT-PROJECTS/PARAMS/omega-env"

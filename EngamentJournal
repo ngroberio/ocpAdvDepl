@@ -8,7 +8,10 @@ Guide
   cd ocpAdvDepl
 
   To install you can run:
-    ./install_ansible.sh (bash installation that is my main resolution)
+    ./install_ansible.sh (main installation)
+
+  Also have a bash installation:
+   ./install.sh
 
 ++ Uninstallation
   If for any reason you want to clean up your environment run:
@@ -16,7 +19,7 @@ Guide
 
 ++ Deployment Target
 
-Ansible playbook file ansible_deployment_homework.yaml or the script install.sh are the entry point for the installation configuration, which includes all operational tasks.
+Ansible playbook file ansible_deployment_homework_v2.yaml or the script install.sh are the entry point for the installation configuration, which includes all operational tasks.
 
   Prepare GUID environment variable across all hosts
   Verify Installation and Configuration of Docker
@@ -64,7 +67,11 @@ Engagement journal
   25 PVs with a size of 5 GB and ReadWriteOnce  access mode have been created.
   25 PVs with a size of 10 GB and ReadWriteMany access mode have been created.
   Create and destroy the nodejs-mongo-persistent application by using smoking test scripts.
-  ->These are related shell scripts below:
+  ->These are the ROLES:
+    ./roles/7_CREATE_PVS
+    ./roles/6_SMOKE_TEST
+
+  ->For bash installation, these are related shell scripts below:
     ./config/infra/pvs/create_pvs.sh
     ./config/infra/pvs/pvs_5Gsize.sh
     ./config/infra/pvs/pvs_10Gsize.sh
@@ -76,7 +83,11 @@ Engagement journal
   There is a load balancer to access the masters called loadbalancer1.$GUID.example.opentlc.com
   There is a load balancer/DNS for both infranodes called *.apps.$GUID.example.opentlc.com
   There are at two infranodes, labeled env=infra
-  ->These are related command below:
+  ->These are the related ROLES:
+    ./roles/4_INITIATE_HOSTS_FILE
+    ./roles/9_HPA_CONFIG_PROD
+
+  ->For bash installation, these are related command below:
     oc autoscale dc/os-tasks --min 1 --max 10 --cpu-percent=80 -n os-tasks-${GUID}-prod
     ./config/templates/hosts_template_ans.yaml
 
@@ -89,7 +100,10 @@ Engagement journal
   Router and Registry Pods run on Infranodes
   Metrics and Logging components run on Infranodes
   Service Catalog, Template Service Broker, and Ansible Service Broker are all working very well.
-  -> These are related templates below:
+  ->These are the related ROLES:
+    ./roles/4_INITIATE_HOSTS_FILE
+
+  ->For bash installation, these are related templates below:
     ./config/templates/hosts_template_ans.yaml
 
 ++ CICD Workflow
@@ -97,26 +111,33 @@ Engagement journal
   Jenkins deploys openshift-tasks app
   Jenkins OpenShift plugin is used to create a CICD workflow
   HPA is configured and working on production deployment of openshift-tasks
-  ->These are related templates below:
+  ->These are the related ROLES:
+    ./roles/8_CICD_WORKFLOW
+
+  ->For bash installation, these are related templates below:
     ./config/templates/os_pipeline_template.yaml
     ./config/templates/setup_jenkins.yaml
-  -> These are install scripts lines related below:
-      ./config/infra/setup_cicd_no_ha.sh
+    ./config/infra/setup_cicd_no_ha.sh
 
 ++ Multitenancy
   Alpha Corp group have two users, amy and Andrew
   Beta Corp group have two users, brian and betty
+  Omega Corp group have two users, nikola and tesla
   Dedicated node for each Client:
-    -> ~this is the related task:
-      APPLY MULTINANT PROJECT SETUP/MULTITENANT-ROLE
+  ->These are the related ROLES:
+    ./roles/10_MULTITENANT_ROLE
+    ./roles/OPENSHIFT-APPLIER
 
   The new project template is modified so that it includes a LimitRange
   The new user template is used to create a user object with the specific label value
-  ->These are related shell scripts and templates below:
-    ./config/templates/project_templates/multitenant-project-template.yaml
+  ->These are related templates below:
+    ./applier/DEPLOY-CLIENT-PROJECTS
+    ./applier/MULTITENANT
 
 ++ Onboarding users
-To onboard new client, the following steps are required
+Be aware about which project the new client must be added, we have 3 projects ALPHA, BETA and OMEGA(common).
+In the case you need a new project, check ./applier/DEPLOY-CLIENT-PROJECTS/PARAMS folder.
+To onboard new client, the following steps are required.
 1. Create users
   # oc process user-request-template -p CLIENT_LABEL_KEY="client" -p CLIENT_LABEL_VALUE="alpha" -p USER_NAME=amy | oc create -f -
   # oc process user-request-template -p CLIENT_LABEL_KEY="client" -p CLIENT_LABEL_VALUE="alpha" -p USER_NAME=andrew | oc create -f -
