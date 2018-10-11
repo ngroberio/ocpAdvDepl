@@ -1,6 +1,7 @@
 Guide
 
 ++ Installation
+  Homework solution developed to run at OCP 3.9.
   First execute the sudo command to ensure that you have operational execution authority, and then clone the prepared script from GitHub to the local environment.
   sudo -i
   git clone https://github.com/ngroberio/ocpAdvDepl
